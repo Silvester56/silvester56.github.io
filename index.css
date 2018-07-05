@@ -1,0 +1,14 @@
+body {
+  background-color: #001532;
+  color: #2f82ff;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+a, a:visited, a:hover {
+  text-decoration: none;
+  color: #2f82ff;
+}
