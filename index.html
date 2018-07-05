@@ -1,109 +1,24 @@
 <!DOCTYPE html>
-<!-- saved from url=(0049)file:///C:/Users/cmussat/Code/sandbox/static.html -->
-<html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-    <title>Etude</title>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="index.css">
+    <title>Silvester56's homepage</title>
   </head>
   <body>
-    <form class="" method="post">
-      <input type="text" name="" value="">
-      <button type="submit" name="button" id="clickme">Rechercher</button>
-      <div id="target"></div>
-    </form>
-
-    <script type="text/javascript">
-      // Calculate a string representation of a node's DOM path.
-      var pathToSelector = function(node) {
-        if (!node || !node.outerHTML) {
-          return null;
-        }
-
-        var path;
-        while (node.parentElement) {
-          var name = node.localName;
-          if (!name) break;
-          name = name.toLowerCase();
-          var parent = node.parentElement;
-          var domSiblings = [];
-          if (parent.children && parent.children.length > 0) {
-            for (var i = 0; i < parent.children.length; i++) {
-              var sibling = parent.children[i];
-              if (sibling.localName && sibling.localName.toLowerCase) {
-                if (sibling.localName.toLowerCase() === name) {
-                  domSiblings.push(sibling);
-                }
-              }
-            }
-          }
-
-          if (domSiblings.length > 1) {
-            name += ':eq(' + domSiblings.indexOf(node) + ')';
-          }
-          path = name + (path ? '>' + path : '');
-          node = parent;
-        }
-
-        return path;
-      };
-
-
-      var serializeEvent = function(e) {
-        return {
-        eventName: e.toString(),
-        altKey: e.altKey,
-        bubbles: e.bubbles,
-        button: e.button,
-        buttons: e.buttons,
-        cancelBubble: e.cancelBubble,
-        cancelable: e.cancelable,
-        clientX: e.clientX,
-        clientY: e.clientY,
-        composed: e.composed,
-        ctrlKey: e.ctrlKey,
-        currentTarget: e.currentTarget ? e.currentTarget.outerHTML : null,
-        defaultPrevented: e.defaultPrevented,
-        detail: e.detail,
-        eventPhase: e.eventPhase,
-        fromElement: e.fromElement ? e.fromElement.outerHTML : null,
-        isTrusted: e.isTrusted,
-        layerX: e.layerX,
-        layerY: e.layerY,
-        metaKey: e.metaKey,
-        movementX: e.movementX,
-        movementY: e.movementY,
-        offsetX: e.offsetX,
-        offsetY: e.offsetY,
-        pageX: e.pageX,
-        pageY: e.pageY,
-        path: pathToSelector(e.path && e.path.length ? e.path[0] : null),
-        relatedTarget: e.relatedTarget ? e.relatedTarget.outerHTML : null,
-        returnValue: e.returnValue,
-        screenX: e.screenX,
-        screenY: e.screenY,
-        shiftKey: e.shiftKey,
-        sourceCapabilities: e.sourceCapabilities ? e.sourceCapabilities.toString() : null,
-        target: e.target ? e.target.outerHTML : null,
-        timeStamp: e.timeStamp,
-        toElement: e.toElement ? e.toElement.outerHTML : null,
-        type: e.type,
-        view: e.view ? e.view.toString() : null,
-        which: e.which,
-        x: e.x,
-        y: e.y
-        };
-      };
-      document.querySelector("#clickme").addEventListener("click", function(event) {
-        var res = "";
-
-        event.preventDefault();
-        var obj = serializeEvent(event);
-        Object.keys(obj).forEach(function(key) {
-          res = res + key + " : " + obj[key] + "<br>";
-        });
-        document.getElementById("target").innerHTML = res;
-        console.log(event);
-      }, false);
-    </script>
-
-
-</body></html>
+    <div class="flex-center">
+      [&emsp;
+      <a href="https://8ch.net/anarcho/catalog.html" target="_blank">8chan</a>&emsp;/&emsp;
+      <a href="https://discordapp.com/channels/@me" target="_blank">discord</a>&emsp;/&emsp;
+      <a href="https://www.dubtrack.fm/join/leftypol-comrades" target="_blank">dubtrack</a>&emsp;/&emsp;
+      <a href="https://lainchan.org/mega/catalog.html" target="_blank">lainchan</a>&emsp;/&emsp;
+      <a href="https://sushigirl.us/kaitensushi/" target="_blank">sushichan</a>&emsp;/&emsp;
+      <a href="https://twitter.com" target="_blank">twitter</a>&emsp;/&emsp;
+      <a href="https://www.youtube.com/feed/subscriptions" target="_blank">youtube</a>
+      &emsp;]
+    </div>
+    <div class="flex-center">
+      <h1>自由人</h1>
+    </div>
+  </body>
+</html>
