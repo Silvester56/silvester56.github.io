@@ -1,7 +1,7 @@
 body {
   background-color: black;
   color: white;
-  font-family: Verdana;
+  padding: 0;
 }
 body.index {
   text-align: center;

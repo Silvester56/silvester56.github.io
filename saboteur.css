@@ -1,49 +1,19 @@
-html {
-  font-size: 16px;
-  height:100%;
-}
-
-body {
-  padding: 0;
-  margin: 0;
-}
-
 span.button-label {
   width: 6rem;
   display: inline-block;
 }
-
 button {
   margin-bottom: 1rem;
-  cursor: pointer;
-  background-color: #e7e7e7;
-  border: none;
-  height: 50px;
-  width: 100px;
-  text-align: center;
-  text-decoration: none;
   display: inline-block;
 }
-
-button:disabled {
-  cursor: default;
-}
-
-button:not(:disabled):hover {
-  background-color: #555555;
-  color: white;
-}
-
 .holder {
   margin: 2rem;
   display: flex;
 }
-
 .holder div {
   margin: 0 1rem;
   width: 2.25rem;
 }
-
 .digger {
   border: 1px solid blue;
 }
