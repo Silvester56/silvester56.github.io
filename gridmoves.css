@@ -1,0 +1,15 @@
+.grid {
+  --rows: 15;
+  --square: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: calc(var(--rows) * var(--square));
+}
+.square {
+  background-color: #777;
+  width: var(--square);
+  height: var(--square);
+}
+.square.active {
+  background-color: red;
+}

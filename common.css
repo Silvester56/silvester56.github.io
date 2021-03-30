@@ -1,0 +1,15 @@
+html {
+  font-size: 16px;
+}
+a, a:visited {
+  color: #444;
+}
+a:active, a:hover {
+  color: #000;
+}
+a.dark-bg, a.dark-bg:visited {
+  color: #fff;
+}
+a.dark-bg:active, a.dark-bg:hover {
+  color: #444;
+}
