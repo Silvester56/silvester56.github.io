@@ -18,6 +18,16 @@ a.dark-bg, a.dark-bg:visited {
 a.dark-bg:active, a.dark-bg:hover {
   color: #444;
 }
+div.input-line {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+span.button-label {
+  width: 6rem;
+  display: inline-flex;
+  align-items: center;
+}
 button {
   cursor: pointer;
   background-color: #e7e7e7;

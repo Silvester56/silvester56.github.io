@@ -1,11 +1,3 @@
-span.button-label {
-  width: 6rem;
-  display: inline-block;
-}
-button {
-  margin-bottom: 1rem;
-  display: inline-block;
-}
 .holder {
   margin: 2rem;
   display: flex;
