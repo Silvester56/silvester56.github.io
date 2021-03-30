@@ -1,16 +1,11 @@
 body {
   background-color: black;
   color: white;
+  font-family: Verdana;
 }
 body.index {
   text-align: center;
 }
 p {
   margin: 1.25rem 0;
-}
-h1, h2, h3, h4, h5, h6 {
-  padding-top: 1.25rem;
-}
-h2 {
-  font-size: 1.25rem;
 }
