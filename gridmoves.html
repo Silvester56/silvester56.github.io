@@ -8,12 +8,26 @@
     <link rel="stylesheet" href="gridmoves.css">
   </head>
   <body>
-    <div class="grid"></div>
-    <div class="grid"></div>
-    <div class="grid"></div>
-    <div class="grid"></div>
-    <div class="grid"></div>
-    <div class="grid"></div>
-    <div class="grid"></div>
+    <div class="input-line">
+      <span class="button-label">taille</span>
+      <input type="number" id="size">
+    </div>
+    <div class="input-line">
+      <span class="button-label">rayon</span>
+      <input type="number" id="move">
+    </div>
+    <div class="input-line">
+      <span class="button-label">type</span>
+      <select id="type">
+        <option value="eucledian">Eucledian</option>
+        <option value="manhattan">Manhattan</option>
+        <option value="minkowski">Minkowski</option>
+      </select>
+    </div>
+    <div class="input-line">
+      <span class="button-label">actions</span>
+      <button id="start" type="button" onclick="displayGrid()">Calcul</button>
+    </div>
+    <div id="grid"></div>
   </body>
 </html>
