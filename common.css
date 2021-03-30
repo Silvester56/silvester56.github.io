@@ -1,5 +1,10 @@
 html {
   font-size: 16px;
+  font-family: Verdana;
+}
+body {
+  margin: 0;
+  padding: 1rem;
 }
 a, a:visited {
   color: #444;
@@ -12,4 +17,18 @@ a.dark-bg, a.dark-bg:visited {
 }
 a.dark-bg:active, a.dark-bg:hover {
   color: #444;
+}
+button {
+  cursor: pointer;
+  background-color: #e7e7e7;
+  border: none;
+  height: 50px;
+  width: 100px;
+}
+button:disabled {
+  cursor: default;
+}
+button:not(:disabled):hover {
+  background-color: #555555;
+  color: white;
 }
