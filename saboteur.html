@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Probas saboteur</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="saboteur.css">
+    <script type="text/javascript" src="saboteur.js"></script>
+  </head>
+  <body>
+    <span class="button-label">chercheurs</span>
+    <button id="dminus" type="button" onclick="remove(1)">-</button>
+    <button type="button" onclick="add(1)">+</button>
+    <br>
+    <span class="button-label">saboteurs</span>
+    <button id="sminus" type="button" onclick="remove(2)">-</button>
+    <button type="button" onclick="add(2)">+</button>
+    <br>
+    <span class="button-label">joueurs</span>
+    <button id="pminus" type="button" onclick="remove(3)">-</button>
+    <button id="pplus" type="button" onclick="add(3)">+</button>
+    <br>
+    <span class="button-label">actions</span>
+    <button id="start" type="button" onclick="calculate()">Calcul</button>
+    <button type="button" onclick="reset()">Reset</button>
+    <div class="holder" id="cards"></div>
+    <div class="holder" id="players"></div>
+    <div id="results"></div>
+  </body>
+</html>
