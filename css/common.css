@@ -22,8 +22,10 @@ div.input-line {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+  align-items: center;
 }
 span.button-label {
+  height: 40px;
   width: 6rem;
   display: inline-flex;
   align-items: center;
@@ -32,7 +34,7 @@ button {
   cursor: pointer;
   background-color: #e7e7e7;
   border: none;
-  height: 50px;
+  height: 40px;
   width: 100px;
 }
 button:disabled {
@@ -41,4 +43,18 @@ button:disabled {
 button:not(:disabled):hover {
   background-color: #555555;
   color: white;
+}
+select {
+  border: none;
+  background-color: #e7e7e7;
+  height: 40px;
+  width: 120px;
+  padding-left: 0.5rem;
+}
+input {
+  border: none;
+  background-color: #e7e7e7;
+  height: 25px;
+  width: 100px;
+  padding-left: 0.5rem;
 }
