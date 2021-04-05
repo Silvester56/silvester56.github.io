@@ -28,6 +28,43 @@
         <option value="wrap-reverse">wrap-reverse</option>
       </select>
     </div>
+    <div class="input-line">
+      <span class="button-label">justify-content</span>
+      <select id="justify-content">
+        <option value="flex-start">flex-start</option>
+        <option value="flex-end">flex-end</option>
+        <option value="center">center</option>
+        <option value="space-around">space-around</option>
+        <option value="space-between">space-between</option>
+        <option value="space-evenly">space-evenly</option>
+      </select>
+    </div>
+    <div class="input-line">
+      <span class="button-label">align-items</span>
+      <select id="align-items">
+        <option value="flex-start">flex-start</option>
+        <option value="flex-end">flex-end</option>
+        <option value="center">center</option>
+        <option value="space-around">stretch</option>
+        <option value="space-between">baseline</option>
+      </select>
+    </div>
+    <div class="input-line">
+      <span class="button-label">align-content</span>
+      <select id="align-content">
+        <option value="flex-start">flex-start</option>
+        <option value="flex-end">flex-end</option>
+        <option value="center">center</option>
+        <option value="stretch">stretch</option>
+        <option value="space-around">space-around</option>
+        <option value="space-between">space-between</option>
+      </select>
+    </div>
+    <div class="input-line">
+      <span class="button-label">items</span>
+      <button id="remove" type="button" onclick="changeItems(-1)">-</button>
+      <button type="button" onclick="changeItems(1)">+</button>
+    </div>
     <div id="container">
       <div class="item">1</div>
       <div class="item">2</div>
