@@ -1,5 +1,3 @@
-const edge = 7;
-
 let manhattan = (x, y) => {
   return Math.abs(x) + Math.abs(y);
 };
@@ -15,23 +13,21 @@ let minkowski = (x, y) => {
 let displayGrid = () => {
   let grid = document.getElementById('grid');
   let edge = document.getElementById('size').value;
+  let square = document.getElementById('square').value;
   let move = document.getElementById('move').value;
+  let type = document.getElementById('type').value;
+  let domString = "";
   document.documentElement.style.setProperty('--rows', edge * 2 + 1);
-  let gridArray = [];
+  document.documentElement.style.setProperty('--square', square + "px");
   for (var i = edge; i >= -edge; i--) {
     for (var j = -edge; j <= edge; j++) {
-      gridArray.push({x: j, y: i});
+      let distance = eval(type + "(j, i)");
+      if (distance <= move) {
+        domString = domString + '<div class="square active"></div>';
+      } else {
+        domString = domString + '<div class="square"></div>';
+      }
     }
   }
-  grid.innerHTML = "";
-  let type = document.getElementById('type').value;
-  for (var i = 0; i < gridArray.length; i++) {
-    let node = document.createElement("div");
-    let distance = eval(type + "(gridArray[i].x, gridArray[i].y)");
-    node.classList.add("square");
-    if (distance <= move) {
-      node.classList.add("active");
-    }
-    grid.appendChild(node);
-  }
+  grid.innerHTML = domString;
 };

@@ -1,5 +1,4 @@
 #grid {
-  --square: 2.5rem;
   display: flex;
   flex-wrap: wrap;
   width: calc(var(--rows) * var(--square));
