@@ -6,11 +6,8 @@ body {
   margin: 0;
   padding: 1rem;
 }
-a, a:visited {
-  color: #444;
-}
-a:active, a:hover {
-  color: #000;
+div.home-link {
+  text-align: center;
 }
 a.dark-bg, a.dark-bg:visited {
   color: #fff;
