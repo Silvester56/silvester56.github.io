@@ -9,33 +9,35 @@
   </head>
   <body>
     <div class="home-link">
-      <a href="../index.html">home</a>
+      <h3><a class="dark-bg" href="../index.html">silvester56.github.io</a></h3>
     </div>
-    <div class="input-line">
-      <span class="button-label">grille</span>
-      <input type="number" id="size" min="5" value="5">
+    <div class="content">
+      <div class="input-line">
+        <span class="button-label">grille</span>
+        <input type="number" id="size" min="5" value="5">
+      </div>
+      <div class="input-line">
+        <span class="button-label">carrés</span>
+        <input type="number" id="square" min="1" value="40">
+        <span class="button-label">px</span>
+      </div>
+      <div class="input-line">
+        <span class="button-label">rayon</span>
+        <input type="number" id="move" min="0" value="3">
+      </div>
+      <div class="input-line">
+        <span class="button-label">type</span>
+        <select id="type">
+          <option value="manhattan">Manhattan</option>
+          <option value="eucledian">Eucledian</option>
+          <option value="minkowski">Minkowski</option>
+        </select>
+      </div>
+      <div class="input-line">
+        <span class="button-label">actions</span>
+        <button id="start" type="button" onclick="displayGrid()">Calcul</button>
+      </div>
+      <div id="grid"></div>
     </div>
-    <div class="input-line">
-      <span class="button-label">carrés</span>
-      <input type="number" id="square" min="1" value="40">
-      <span class="button-label">px</span>
-    </div>
-    <div class="input-line">
-      <span class="button-label">rayon</span>
-      <input type="number" id="move" min="0" value="3">
-    </div>
-    <div class="input-line">
-      <span class="button-label">type</span>
-      <select id="type">
-        <option value="manhattan">Manhattan</option>
-        <option value="eucledian">Eucledian</option>
-        <option value="minkowski">Minkowski</option>
-      </select>
-    </div>
-    <div class="input-line">
-      <span class="button-label">actions</span>
-      <button id="start" type="button" onclick="displayGrid()">Calcul</button>
-    </div>
-    <div id="grid"></div>
   </body>
 </html>

@@ -4,16 +4,23 @@ html {
 }
 body {
   margin: 0;
-  padding: 1rem;
 }
 div.home-link {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+}
+div.home-link a {
+  text-decoration: none;
 }
 a.dark-bg, a.dark-bg:visited {
   color: #fff;
 }
 a.dark-bg:active, a.dark-bg:hover {
   color: #444;
+}
+div.content {
+  padding: 1rem;
 }
 div.input-line {
   display: flex;

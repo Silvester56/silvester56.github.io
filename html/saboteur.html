@@ -9,30 +9,32 @@
   </head>
   <body>
     <div class="home-link">
-      <a href="../index.html">home</a>
+      <h3><a class="dark-bg" href="../index.html">silvester56.github.io</a></h3>
     </div>
-    <div class="input-line">
-      <span class="button-label">chercheurs</span>
-      <button id="dminus" type="button" onclick="remove(1)">-</button>
-      <button type="button" onclick="add(1)">+</button>
+    <div class="content">
+      <div class="input-line">
+        <span class="button-label">chercheurs</span>
+        <button id="dminus" type="button" onclick="remove(1)">-</button>
+        <button type="button" onclick="add(1)">+</button>
+      </div>
+      <div class="input-line">
+        <span class="button-label">saboteurs</span>
+        <button id="sminus" type="button" onclick="remove(2)">-</button>
+        <button type="button" onclick="add(2)">+</button>
+      </div>
+      <div class="input-line">
+        <span class="button-label">joueurs</span>
+        <button id="pminus" type="button" onclick="remove(3)">-</button>
+        <button id="pplus" type="button" onclick="add(3)">+</button>
+      </div>
+      <div class="input-line">
+        <span class="button-label">actions</span>
+        <button id="start" type="button" onclick="calculate()">Calcul</button>
+        <button type="button" onclick="reset()">Reset</button>
+      </div>
+      <div class="holder" id="cards"></div>
+      <div class="holder" id="players"></div>
+      <div id="results"></div>
     </div>
-    <div class="input-line">
-      <span class="button-label">saboteurs</span>
-      <button id="sminus" type="button" onclick="remove(2)">-</button>
-      <button type="button" onclick="add(2)">+</button>
-    </div>
-    <div class="input-line">
-      <span class="button-label">joueurs</span>
-      <button id="pminus" type="button" onclick="remove(3)">-</button>
-      <button id="pplus" type="button" onclick="add(3)">+</button>
-    </div>
-    <div class="input-line">
-      <span class="button-label">actions</span>
-      <button id="start" type="button" onclick="calculate()">Calcul</button>
-      <button type="button" onclick="reset()">Reset</button>
-    </div>
-    <div class="holder" id="cards"></div>
-    <div class="holder" id="players"></div>
-    <div id="results"></div>
   </body>
 </html>
