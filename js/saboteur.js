@@ -4,17 +4,17 @@ let playersArray = [];
 
 let possibleGames = [];
 
-function checkDisabled() {
-  document.getElementById('dminus').disabled = (diggersArray.length === 0);
-  document.getElementById('sminus').disabled = (saboteursArray.length === 0);
-  document.getElementById('pminus').disabled = (playersArray.length === 0);
-  document.getElementById('pplus').disabled = (playersArray.length >= diggersArray.length + saboteursArray.length);
-  document.getElementById('start').disabled = (playersArray.length === 0 || diggersArray.length + saboteursArray.length === 0);
+let checkDisabled = () => {
+  document.getElementById("dminus").disabled = (diggersArray.length === 0);
+  document.getElementById("sminus").disabled = (saboteursArray.length === 0);
+  document.getElementById("pminus").disabled = (playersArray.length === 0);
+  document.getElementById("pplus").disabled = (playersArray.length >= diggersArray.length + saboteursArray.length);
+  document.getElementById("start").disabled = (playersArray.length === 0 || diggersArray.length + saboteursArray.length === 0);
 }
 
 window.onload = checkDisabled;
 
-function draw() {
+let draw = () => {
   document.getElementById("cards").innerHTML = "";
   document.getElementById("players").innerHTML = "";
   for (var i = 0; i < diggersArray.length; i++) {
@@ -40,7 +40,7 @@ function draw() {
   }
 }
 
-function remove(type) {
+let remove = (type) => {
   if (type === 1) {
     diggersArray.pop();
   } else if (type === 2) {
@@ -52,21 +52,21 @@ function remove(type) {
   checkDisabled();
 }
 
-function add(type) {
+let add = (type) => {
   let id;
   let divClass;
   let name;
   if (type === 1) {
     divClass = "digger";
-    name = "D" + (diggersArray.length + 1);
+    name = `D${diggersArray.length + 1}`;
     diggersArray.push(name);
   } else if (type === 2) {
     divClass = "saboteur";
-    name = "S" + (saboteursArray.length + 1);
+    name = `S${saboteursArray.length + 1}`;
     saboteursArray.push(name);
   } else if (type === 3) {
     divClass = "player";
-    name = "P" + (playersArray.length + 1);
+    name = `P${playersArray.length + 1}`;
     playersArray.push(name);
     id = "players";
   }
@@ -74,10 +74,10 @@ function add(type) {
   checkDisabled();
 }
 
-function game(str, cards, players) {
+let game = (str, cards, players) => {
   if (players.length === 0) {
     possibleGames.push(str);
-    return str + " | ";
+    return `${str} | `;
   }
   let tmp = "";
   let p = players[0];
@@ -89,19 +89,19 @@ function game(str, cards, players) {
   return tmp;
 }
 
-function displayResult(str) {
+let displayResult = (str) => {
   let node = document.createElement("div");
   let newContent = document.createTextNode(str);
   node.appendChild(newContent);
   document.getElementById("results").appendChild(node);
 }
 
-function percentage(sum, total) {
-  let result = 100 * sum / total;
-  return (result + "").substring(0, 5) + "%";
+let percentage = (sum, total) => {
+  let result = `${100 * sum / total}`;
+  return `${result.substring(0, 5)}%`;
 }
 
-function calculate() {
+let calculate = () => {
   let sNumbers = saboteursArray.map(x => 0);
   sNumbers.push(0);
   possibleGames = [];
@@ -113,13 +113,13 @@ function calculate() {
     sNumbers[nb]++;
   }
   document.getElementById("results").innerHTML = "";
-  displayResult("Parties possibles : " + possibleGames.length);
+  displayResult(`Parties possibles : ${possibleGames.length}`);
   for (var i = 0; i < sNumbers.length && saboteursArray.length > 0; i++) {
-    displayResult("Parties avec exactement " + i + " saboteurs : " + sNumbers[i] + " (" + percentage(sNumbers[i], possibleGames.length) + ")");
+    displayResult(`Parties avec exactement ${i} saboteurs : ${sNumbers[i]} (${percentage(sNumbers[i], possibleGames.length)})`);
   }
 }
 
-function reset() {
+let reset = () => {
   diggersArray = [];
   saboteursArray = [];
   playersArray = [];
