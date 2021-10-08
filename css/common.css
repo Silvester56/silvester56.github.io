@@ -1,9 +1,11 @@
 html {
   font-size: 16px;
-  font-family: Verdana;
+  font-family: sans-serif;
 }
 body {
   margin: 0;
+  background: #1E1E1E;
+  color: #999999;
 }
 div.home-link {
   display: flex;
@@ -13,10 +15,10 @@ div.home-link {
 div.home-link a {
   text-decoration: none;
 }
-a.dark-bg, a.dark-bg:visited {
+a, a:visited {
   color: #fff;
 }
-a.dark-bg:active, a.dark-bg:hover {
+a:active, a:hover {
   color: #444;
 }
 div.content {
@@ -61,4 +63,12 @@ input {
   height: 25px;
   width: 100px;
   padding-left: 0.5rem;
+}
+code {
+  font-family: monospace;
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #282828;
+  color: #ebdbb2;
 }
