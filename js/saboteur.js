@@ -4,40 +4,26 @@ let playersArray = [];
 
 let possibleGames = [];
 
+let results;
+
 let checkDisabled = () => {
-  document.getElementById("dminus").disabled = (diggersArray.length === 0);
-  document.getElementById("sminus").disabled = (saboteursArray.length === 0);
-  document.getElementById("pminus").disabled = (playersArray.length === 0);
-  document.getElementById("pplus").disabled = (playersArray.length >= diggersArray.length + saboteursArray.length);
-  document.getElementById("start").disabled = (playersArray.length === 0 || diggersArray.length + saboteursArray.length === 0);
+  new domNode("#dminus").prop("disabled", diggersArray.length === 0);
+  new domNode("#sminus").prop("disabled", saboteursArray.length === 0);
+  new domNode("#pminus").prop("disabled", playersArray.length === 0);
+  new domNode("#pplus").prop("disabled", playersArray.length >= diggersArray.length + saboteursArray.length);
+  new domNode("#start").prop("disabled", playersArray.length === 0 || diggersArray.length === 0 || saboteursArray.length === 0);
 }
 
-window.onload = checkDisabled;
+window.onload = () => {
+  results = new domNode("#results");
+  checkDisabled();
+}
+
+let htmlFromArray = (arr, className) => arr.reduce((acc, cur) => `${acc}<div class="${className}">${cur}</div>`, "")
 
 let draw = () => {
-  document.getElementById("cards").innerHTML = "";
-  document.getElementById("players").innerHTML = "";
-  for (var i = 0; i < diggersArray.length; i++) {
-    let node = document.createElement("div");
-    let newContent = document.createTextNode(diggersArray[i]);
-    node.appendChild(newContent);
-    node.classList.add("digger");
-    document.getElementById("cards").appendChild(node);
-  }
-  for (var i = 0; i < saboteursArray.length; i++) {
-    let node = document.createElement("div");
-    let newContent = document.createTextNode(saboteursArray[i]);
-    node.appendChild(newContent);
-    node.classList.add("saboteur");
-    document.getElementById("cards").appendChild(node);
-  }
-  for (var i = 0; i < playersArray.length; i++) {
-    let node = document.createElement("div");
-    let newContent = document.createTextNode(playersArray[i]);
-    node.appendChild(newContent);
-    node.classList.add("player");
-    document.getElementById("players").appendChild(node);
-  }
+  new domNode("#cards").html(htmlFromArray(diggersArray, "digger") + htmlFromArray(saboteursArray, "saboteur"));
+  new domNode("#players").html(htmlFromArray(playersArray, "player"));
 }
 
 let remove = (type) => {
@@ -54,20 +40,12 @@ let remove = (type) => {
 
 let add = (type) => {
   let id;
-  let divClass;
-  let name;
   if (type === 1) {
-    divClass = "digger";
-    name = `D${diggersArray.length + 1}`;
-    diggersArray.push(name);
+    diggersArray.push(`D${diggersArray.length + 1}`);
   } else if (type === 2) {
-    divClass = "saboteur";
-    name = `S${saboteursArray.length + 1}`;
-    saboteursArray.push(name);
+    saboteursArray.push(`S${saboteursArray.length + 1}`);
   } else if (type === 3) {
-    divClass = "player";
-    name = `P${playersArray.length + 1}`;
-    playersArray.push(name);
+    playersArray.push(`P${playersArray.length + 1}`);
     id = "players";
   }
   draw();
@@ -89,13 +67,6 @@ let game = (str, cards, players) => {
   return tmp;
 }
 
-let displayResult = (str) => {
-  let node = document.createElement("div");
-  let newContent = document.createTextNode(str);
-  node.appendChild(newContent);
-  document.getElementById("results").appendChild(node);
-}
-
 let percentage = (sum, total) => {
   let result = `${100 * sum / total}`;
   return `${result.substring(0, 5)}%`;
@@ -112,11 +83,7 @@ let calculate = () => {
     let nb = possibleGames[i].split("S").length - 1;
     sNumbers[nb]++;
   }
-  document.getElementById("results").innerHTML = "";
-  displayResult(`Parties possibles : ${possibleGames.length}`);
-  for (var i = 0; i < sNumbers.length && saboteursArray.length > 0; i++) {
-    displayResult(`Parties avec exactement ${i} saboteurs : ${sNumbers[i]} (${percentage(sNumbers[i], possibleGames.length)})`);
-  }
+  results.html(sNumbers.reduce((acc, cur, index) => `${acc}<div>Parties avec exactement ${index} saboteurs : ${cur} (${percentage(cur, possibleGames.length)})</div>`, `<div>Parties possibles : ${possibleGames.length}</div>`));
 }
 
 let reset = () => {
@@ -124,8 +91,8 @@ let reset = () => {
   saboteursArray = [];
   playersArray = [];
   possibleGames = [];
-  document.getElementById("cards").innerHTML = "";
-  document.getElementById("players").innerHTML = "";
-  document.getElementById("results").innerHTML = "";
+  new domNode("#cards").html("");
+  new domNode("#players").html("");
+  results.html("");
   checkDisabled();
 }

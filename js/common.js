@@ -5,16 +5,37 @@ class domNode {
     } else if (selector.startsWith(".")) {
       this.elementsList = document.getElementsByClassName(selector.slice(1));
     } else {
-      this.elementsList = document.getElementsByTagName(selector.slice(1));
+      this.elementsList = document.getElementsByTagName(selector);
     }
   }
-  isChecked() {
+  isChecked() { // TODO use prop
     return this.elementsList[0].checked;
   }
-  getValue() {
-    return this.elementsList[0].value;
+  val(value) {
+    if (value == null) {
+      return this.elementsList[0].value;
+    }
+    this.elementsList[0].value = value;
   }
-  setValue(newValue) {
-    this.elementsList[0].value = newValue;
+  html(value) {
+    if (value == null) {
+      return this.elementsList[0].innerHTML;
+    }
+    this.elementsList[0].innerHTML = value;
+  }
+  attr(attributeName, value) {
+    if (value == null) {
+      return this.elementsList[0].getAttribute(attributeName);
+    }
+    this.elementsList[0].setAttribute(attributeName, value);
+  }
+  on(events, handler) {
+    this.elementsList[0].addEventListener(events, handler);
+  }
+  prop(propertyName, value) {
+    if (value == null) {
+      return this.elementsList[0][propertyName];
+    }
+    this.elementsList[0][propertyName] = value;
   }
 }

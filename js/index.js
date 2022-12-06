@@ -1,5 +1,5 @@
 window.onload = () => {
-  let img = document.getElementById("gif");
+  let img = new domNode("#gif");
   let number = Date.now() % 10;
-  img.setAttribute("src", `img/${number}.gif`);
+  img.attr("src", `img/${number}.gif`);
 }
