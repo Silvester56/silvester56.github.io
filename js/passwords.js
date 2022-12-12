@@ -11,11 +11,11 @@ const randomElements = (characterArray, segmentLength, allowed) => {
 };
 
 const generatePassword = () => {
-  let passwordLength = new domNode("#length").getValue();
-  let lettersAllowed = new domNode("#letters").isChecked();
-  let uppercaseLettersAllowed = new domNode("#uppercaseLetters").isChecked();
-  let digitsAllowed = new domNode("#digits").isChecked();
-  let specialsAllowed = new domNode("#specials").isChecked();
+  let passwordLength = new domNode("#length").val();
+  let lettersAllowed = new domNode("#letters").prop("checked");
+  let uppercaseLettersAllowed = new domNode("#uppercaseLetters").prop("checked");
+  let digitsAllowed = new domNode("#digits").prop("checked");
+  let specialsAllowed = new domNode("#specials").prop("checked");
   let result = [];
   while (result.length < passwordLength) {
     result = result.concat(randomElements(letters.split(""), passwordLength / 4, lettersAllowed));
@@ -23,8 +23,8 @@ const generatePassword = () => {
     result = result.concat(randomElements(digits.split(""), passwordLength / 4, digitsAllowed));
     result = result.concat(randomElements(specials.split(""), passwordLength / 4, specialsAllowed));
   }
-  if (!(new domNode("#assemble").isChecked())) {
+  if (!(new domNode("#assemble").prop("checked"))) {
     result = result.sort(() => 0.5 - Math.random());
   }
-  new domNode("#password").setValue(result.slice(0, passwordLength).join(""));
+  new domNode("#password").val(result.slice(0, passwordLength).join(""));
 };

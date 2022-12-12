@@ -8,9 +8,6 @@ class domNode {
       this.elementsList = document.getElementsByTagName(selector);
     }
   }
-  isChecked() { // TODO use prop
-    return this.elementsList[0].checked;
-  }
   val(value) {
     if (value == null) {
       return this.elementsList[0].value;
