@@ -26,9 +26,15 @@ div.content {
 }
 div.input-line {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1rem;
   align-items: center;
+}
+div.input-unit {
+  display: flex;
+  flex: 1;
+  gap: 0.5rem;
 }
 span.button-label {
   height: 40px;
@@ -55,13 +61,6 @@ select {
   background-color: #e7e7e7;
   height: 40px;
   width: 120px;
-  padding-left: 0.5rem;
-}
-input {
-  border: none;
-  background-color: #e7e7e7;
-  height: 25px;
-  width: 100px;
   padding-left: 0.5rem;
 }
 code {

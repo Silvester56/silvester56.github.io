@@ -14,29 +14,39 @@
     </div>
     <div class="content">
       <div class="input-line">
-        <span class="button-label">grille</span>
-        <input type="number" id="size" min="5" value="5">
+        <div class="input-unit">
+          <span class="button-label">grille</span>
+          <input type="number" id="size" min="5" value="5">
+        </div>
       </div>
       <div class="input-line">
-        <span class="button-label">carrés</span>
-        <input type="number" id="square" min="1" value="40">
-        <span class="button-label">px</span>
+        <div class="input-unit">
+          <span class="button-label">carrés</span>
+          <input type="number" id="square" min="1" value="40">
+          <span class="button-label">px</span>
+        </div>
       </div>
       <div class="input-line">
-        <span class="button-label">rayon</span>
-        <input type="number" id="move" min="0" value="3">
+        <div class="input-unit">
+          <span class="button-label">rayon</span>
+          <input type="number" id="move" min="0" value="3">
+        </div>
       </div>
       <div class="input-line">
-        <span class="button-label">type</span>
-        <select id="type">
-          <option value="manhattan">Manhattan</option>
-          <option value="eucledian">Eucledian</option>
-          <option value="minkowski">Minkowski</option>
-        </select>
+        <div class="input-unit">
+          <span class="button-label">type</span>
+          <select id="type">
+            <option value="manhattan">Manhattan</option>
+            <option value="eucledian">Eucledian</option>
+            <option value="minkowski">Minkowski</option>
+          </select>
+        </div>
       </div>
       <div class="input-line">
-        <span class="button-label">actions</span>
-        <button id="start" type="button" onclick="displayGrid()">Calcul</button>
+        <div class="input-unit">
+          <span class="button-label">actions</span>
+          <button id="start" type="button" onclick="displayGrid()">Calcul</button>
+        </div>
       </div>
       <div id="grid"></div>
     </div>
