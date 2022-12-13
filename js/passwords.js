@@ -27,4 +27,9 @@ const generatePassword = () => {
     result = result.sort(() => 0.5 - Math.random());
   }
   new domNode("#password").val(result.slice(0, passwordLength).join(""));
+  navigator.clipboard.writeText(new domNode("#password").val()).then(() => new domNode("#copy").html("Copy"));
+};
+
+const copyPassword = () => {
+  navigator.clipboard.writeText(new domNode("#password").val()).then(() => new domNode("#copy").html("Copied!"));
 };
