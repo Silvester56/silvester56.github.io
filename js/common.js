@@ -27,7 +27,9 @@ class domNode {
     this.elementsList[0].setAttribute(attributeName, value);
   }
   on(events, handler) {
-    this.elementsList[0].addEventListener(events, handler);
+    for (var item of this.elementsList) {
+      item.addEventListener(events, handler);
+    }
   }
   prop(propertyName, value) {
     if (value == null) {

@@ -1,0 +1,16 @@
+#container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+#container .letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #ffffff;
+}
+#container .letter.locked {
+  border: 2px solid #cc2222;
+}
