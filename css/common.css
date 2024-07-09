@@ -7,22 +7,41 @@ body {
   background: #1E1E1E;
   color: #999999;
 }
-div.home-link {
+header {
+  background-image: url('../img/header.png');
+}
+.header-center {
   display: flex;
-  justify-content: center;
-  background-color: #000;
-}
-div.home-link a {
-  text-decoration: none;
-}
-a, a:visited {
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  height: 100px;
+  margin: 0 auto;
   color: #fff;
 }
-a:active, a:hover {
-  color: #444;
+.header-center h1 {
+  margin: 0;
 }
-div.content {
+nav {
+  display: grid;
+  height: 100%;
+  align-items: center;
+  grid-template-columns: repeat(2, 200px);
+  grid-template-rows: repeat(4, 1fr);
+}
+main {
   padding: 1rem;
+}
+.page-description {
+  width: 50%;
+  margin: 0 auto;
+}
+a, a:visited {
+  text-decoration: none;
+  color: #ffffff;
+}
+a:active, a:hover {
+  color: #888888;
 }
 div.input-line {
   display: flex;

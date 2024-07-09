@@ -2,17 +2,32 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Grid moves</title>
-    <script src="../js/common.js"></script>
-    <script src="../js/gridmoves.js"></script>
+    <title>Grid moves | Silvester56</title>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/gridmoves.css">
+    <script src="../js/common.js"></script>
+    <script src="../js/gridmoves.js"></script>
   </head>
   <body>
-    <div class="home-link">
-      <h3><a href="../index.html">silvester56.github.io</a></h3>
-    </div>
-    <div class="content">
+    <header>
+      <div class="header-center">
+        <h1>Silvester56</h1>
+        <nav>
+          <a href="../index.html">Home</a>
+          <a href="gridmoves.html">Grid moves</a>
+          <a href="saboteur.html">Saboteur calculator</a>
+          <a href="flexbox.html">Flexbox</a>
+          <a href="sugar.html">Sugar</a>
+          <a href="passwords.html">Passwords generator</a>
+          <a href="anagram.html">Anagram</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="page-description">
+        <p>This page creates a grid. Each cell on the grid is red if it is close enough to the center, and gray otherwise.</p>
+        <p>The user can choose which distance is used : manhattan, eucledian, or minkowski.</p>
+      </div>
       <div class="input-line">
         <div class="input-unit">
           <span class="button-label">Grid</span>
@@ -49,6 +64,6 @@
         </div>
       </div>
       <div id="grid"></div>
-    </div>
+    </main>
   </body>
 </html>
