@@ -9,12 +9,13 @@ body {
 }
 header {
   background-image: url('../img/header.png');
+  padding: 0 1rem;
 }
 .header-center {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 50%;
+  width: 70%;
   height: 100px;
   margin: 0 auto;
   color: #fff;
@@ -33,7 +34,7 @@ main {
   padding: 1rem;
 }
 .page-description {
-  width: 50%;
+  width: 70%;
   margin: 0 auto;
 }
 a, a:visited {
