@@ -83,7 +83,7 @@ let calculate = () => {
     let nb = possibleGames[i].split("S").length - 1;
     sNumbers[nb]++;
   }
-  results.html(sNumbers.reduce((acc, cur, index) => `${acc}<div>Parties avec exactement ${index} saboteurs : ${cur} (${percentage(cur, possibleGames.length)})</div>`, `<div>Parties possibles : ${possibleGames.length}</div>`));
+  results.html(sNumbers.reduce((acc, cur, index) => `${acc}<div>Distributions with exactly ${index} saboteurs : ${cur} (${percentage(cur, possibleGames.length)})</div>`, `<div>Possible distributions : ${possibleGames.length}</div>`));
 }
 
 let reset = () => {
