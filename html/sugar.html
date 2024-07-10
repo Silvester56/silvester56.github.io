@@ -4,6 +4,8 @@
     <meta charset="utf-8">
     <title>Sugar | Silvester56</title>
     <link rel="stylesheet" href="../css/common.css">
+    <script src="../js/common.js"></script>
+    <script src="../js/sugar.js"></script>
   </head>
   <body>
     <header>
@@ -26,58 +28,10 @@
       </div>
       <div class="input-line">
         <div class="input-unit">
-          <a href="sugar" class="button-label" download>Download file</a>
+          <button id="copy" type="button" onclick="copyAll()">Copy</button>
         </div>
       </div>
-      <div id="container">
-        <code>
-          alias ll='ls -lh --color=always --group-directories-first'
-          <br>alias la='ls -lah --color=always --group-directories-first'
-          <br>alias p='pwd'
-          <br>alias v='vim'
-          <br>alias ..='cd ..'
-          <br>alias ...='cd ../..'
-          <br>alias ....='cd ../../..'
-          <br>alias grep='grep --color=auto'
-          <br>alias fgrep='fgrep --color=auto'
-          <br>alias egrep='egrep --color=auto'
-          <br>alias install='sudo apt-get install'
-          <br>alias update='sudo apt-get update'
-          <br>alias upgrade='sudo apt-get upgrade'
-          <br>alias org='mv */* . && find . -empty -type d -delete'
-          <br>alias crawl='wget -m -p -E -k'
-          <br>alias gits='git branch; git status -s'
-          <br>alias gitcom='git commit -m'
-          <br>alias gitp='git push'
-          <br>
-          <br>changeinfilenames() {
-          <br>&nbsp;for file in * ; do
-          <br>&nbsp;&nbsp;if [ "$file" != "${file/$1/$2}" ]; then
-          <br>&nbsp;&nbsp;&nbsp;mv "$file" "${file/$1/$2}"
-          <br>&nbsp;&nbsp;fi
-          <br>&nbsp;done
-          <br>}
-          <br>
-          <br>gitall() {
-          <br>&nbsp;git add --all
-          <br>&nbsp;git commit -m "$1"
-          <br>&nbsp;git push
-          <br>}
-          <br>
-          <br>gitlog() {
-          <br>&nbsp;git log -n $1
-          <br>}
-          <br>
-          <br>mmv() {
-          <br>&nbsp;mkdir $2 && mv $1 $2
-          <br>}
-          <br>
-          <br>mcd() {
-          <br>&nbsp;mkdir "$1" &&
-          <br>&nbsp;cd "$1"
-          <br>}
-        </code>
-      </div>
+      <div id="container"></div>
     </main>
   </body>
 </html>

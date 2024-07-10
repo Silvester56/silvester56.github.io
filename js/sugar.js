@@ -1,4 +1,5 @@
-alias ll='ls -lh --color=always --group-directories-first'
+const sugar =
+`alias ll='ls -lh --color=always --group-directories-first'
 alias la='ls -lah --color=always --group-directories-first'
 alias p='pwd'
 alias v='vim'
@@ -15,31 +16,31 @@ alias org='mv */* . && find . -empty -type d -delete'
 alias crawl='wget -m -p -E -k'
 alias gits='git branch; git status -s'
 alias gitcom='git commit -m'
-alias gitp='git push'
-
-changeinfilenames() {
-  for file in * ; do
-    if [ "$file" != "${file/$1/$2}" ]; then
-      mv "$file" "${file/$1/$2}"
-    fi
-  done
-}
 
 gitall() {
-  git add --all
-  git commit -m "$1"
-  git push
+ git add --all
+ git commit -m "$1"
+ git push
 }
 
 gitlog() {
-  git log -n $1
+ git log -n $1
 }
 
 mmv() {
-  mkdir $2 && mv $1 $2
+ mkdir $2 && mv $1 $2
 }
 
 mcd() {
-  mkdir "$1" &&
-  cd "$1"
+ mkdir "$1" &&
+ cd "$1"
+}`;
+
+window.onload = () => {
+  container = new domNode("#container");
+  container.html("<code>" + sugar.replaceAll("\n", "<br>") + "</code>");
 }
+
+const copyAll = () => {
+  navigator.clipboard.writeText(sugar).then(() => new domNode("#copy").html("Copied!"));
+};
