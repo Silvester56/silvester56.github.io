@@ -10,6 +10,13 @@ window.onload = () => {
     NEXT_LEVEL: enumValue("NEXT_LEVEL"),
     GAME_OVER: enumValue("GAME_OVER")
   });
+  const EnemyBehavior = Object.freeze({
+    WALK: enumValue("WALK"),
+    STILL: enumValue("STILL"),
+    PATROL: enumValue("PATROL"),
+    SEEK: enumValue("SEEK"),
+    REPOP: enumValue("REPOP")
+  });
 
   world.width = world.clientWidth;
   world.height = world.clientHeight;
@@ -313,43 +320,87 @@ window.onload = () => {
   }
 
   class Enemy extends Person {
-    constructor(cornersCoordinates, startingOffsetX, startingOffsetY, startingVelocityX, startingVelocityY) {
-      super(cornersCoordinates.upLeftX + startingOffsetX, cornersCoordinates.upLeftY + startingOffsetY);
+    constructor(cornersCoordinates, startingOffsetX, startingOffsetY, startingVelocityX, startingVelocityY, startingBehavior) {
+      super(startingBehavior === EnemyBehavior.PATROL ? cornersCoordinates.downRightX : cornersCoordinates.upLeftX + startingOffsetX, startingBehavior === EnemyBehavior.PATROL ? cornersCoordinates.downRightY : cornersCoordinates.upLeftY + startingOffsetY);
       this.cornersCoordinates = cornersCoordinates;
       this.width = 32;
       this.height = 32;
       this.velocityX = startingVelocityX;
       this.velocityY = startingVelocityY;
+      this.behavior = startingBehavior;
+      this.spriteOffsetY = startingBehavior === EnemyBehavior.PATROL ? 32 : 0;
+      this.timeUntilNextBehavior = Math.max(200, 2000 - level * 200);
     }
 
     draw () {
-      let step = freezingTime > 0 ? 2 : Math.floor(new Date().getMilliseconds() / 500) % 2;
-      canvasContext.drawImage(imageArray[3], gamePhase === GamePhases.NEXT_LEVEL ? 0 : step * 32, eatEnemiesTime > 0 ? 64 : 0, this.width, this.height, this.positionX - this.width / 2, this.positionY - this.height / 2, this.width, this.height);
+      let step = freezingTime > 0 ? 2 : Math.floor(new Date().getMilliseconds() / 500) % 2; // TODO use frames instead
+      canvasContext.drawImage(imageArray[3], gamePhase === GamePhases.NEXT_LEVEL ? 0 : step * 32, eatEnemiesTime > 0 ? 64 : this.spriteOffsetY, this.width, this.height, this.positionX - this.width / 2, this.positionY - this.height / 2, this.width, this.height);
     }
 
     update(player) {
       if (freezingTime > 0) {
         return;
       }
-      if (this.positionX === player.positionX && this.positionY === player.positionY) {
-        // TODO bug of going past the enemy
-        if (eatEnemiesTime > 0) {
-          enemiesArray.splice(enemiesArray.indexOf(this), 1);
-          addToScore(pointsFromEnemies, player);
-          pointsFromEnemies = pointsFromEnemies * 2;
-        } else {
-          gamePhase = GamePhases.LOSE_LIFE;
-          resetTime = world.width;
+      if (gamePhase === GamePhases.PLAY) {
+        if (this.positionX < player.positionX + 5 && this.positionX > player.positionX - 5 && this.positionY < player.positionY + 5 && this.positionY > player.positionY - 5) {
+          if (eatEnemiesTime > 0) {
+            enemiesArray.splice(enemiesArray.indexOf(this), 1);
+            addToScore(pointsFromEnemies, player);
+            pointsFromEnemies = pointsFromEnemies * 2;
+          } else {
+            gamePhase = GamePhases.LOSE_LIFE;
+            resetTime = world.width;
+          }
         }
       }
-      if (this.positionY === this.cornersCoordinates.upLeftY) {
-        this.velocityY = 2;
-      } else if (this.positionY === this.cornersCoordinates.downRightY) {
-        this.velocityY = -2;
-      }
-      if (this.previousPositionX === this.positionX) { // TODO remake, not very clear
-        if (map.collide(this.positionX - this.velocityX, this.positionY)) {
-          this.velocityX = -this.velocityX;
+      if (this.behavior === EnemyBehavior.WALK) {
+        if (this.positionY === this.cornersCoordinates.upLeftY) {
+          this.velocityY = 2;
+        } else if (this.positionY === this.cornersCoordinates.downRightY) {
+          this.velocityY = -2;
+        }
+        if (this.previousPositionX === this.positionX) { // TODO remake, not very clear
+          if (map.collide(this.positionX - this.velocityX, this.positionY)) {
+            this.velocityX = -this.velocityX;
+          }
+        }
+      } else if (this.behavior === EnemyBehavior.PATROL) {
+        if (this.positionY === this.cornersCoordinates.upLeftY) {
+          this.velocityX = -2;
+        } else if (this.positionY === this.cornersCoordinates.downRightY) {
+          this.velocityX = 2;
+        }
+        if (this.positionX === this.cornersCoordinates.upLeftX) {
+          this.velocityY = 2;
+        } else if (this.positionX === this.cornersCoordinates.downRightX) {
+          this.velocityY = -2;
+        }
+        this.timeUntilNextBehavior--;
+        if (this.timeUntilNextBehavior === 0) {
+          this.behavior = EnemyBehavior.STILL;
+          this.timeUntilNextBehavior = 200;
+        }
+      } else if (this.behavior === EnemyBehavior.STILL) {
+        this.velocityX = 0;
+        this.velocityY = 0;
+        this.timeUntilNextBehavior--;
+        if (this.timeUntilNextBehavior === 0) {
+          this.behavior = EnemyBehavior.SEEK;
+        }
+      } else if (this.behavior === EnemyBehavior.SEEK) {
+        if (player.positionX < this.positionX) {
+          this.velocityX = -2;
+        } else if (player.positionX > this.positionX) {
+          this.velocityX = 2;
+        } else {
+          this.velocityX = 0;
+        }
+        if (player.positionY < this.positionY) {
+          this.velocityY = -2;
+        } else if (player.positionY > this.positionY) {
+          this.velocityY = 2;
+        } else {
+          this.velocityY = 0;
         }
       }
       super.update(); // TODO may not be necessary
@@ -363,7 +414,8 @@ window.onload = () => {
       map = new Map();
       player.freezingAmmo = 3;
     }
-    enemiesArray = Array.from(Array(Math.min(level + 4, 6)), (_, number) => new Enemy(map.getCornersCoordinates(), number * map.getColumnWidth(), 2, 2, 2));
+    enemiesArray = Array.from(Array(Math.min(level + 4, 6)), (_, number) => new Enemy(map.getCornersCoordinates(), number * map.getColumnWidth(), 2, 2, 2, EnemyBehavior.WALK));
+    enemiesArray.push(new Enemy(map.getCornersCoordinates(), 0, 0, 0, -2, EnemyBehavior.PATROL));
     player.positionX = map.getBottomMiddleCoordinates().x;
     player.positionY = map.getBottomMiddleCoordinates().y;
   }
@@ -384,6 +436,7 @@ window.onload = () => {
       drawTextCenter(0, "one player only", 50, 32);
     } else if (gamePhase === GamePhases.GAME_OVER) {
       drawTextCenter(0, "GAME OVER", 0, 40);
+      drawTextCenter(7, "score " + score, 100, 20);
     } else if (gamePhase === GamePhases.NEXT_LEVEL) {
       map.draw();
       enemiesArray.forEach(enemy => {
