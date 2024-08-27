@@ -22,11 +22,11 @@ window.onload = () => {
   world.height = world.clientHeight;
 
   let gamePhase = GamePhases.MENU;
-  let frames = 0;
   let score = 0;
   let imagesLoaded = 0;
   let level = 0;
   let map;
+  let milliseconds;
   let imageNameArray = ["life.png", "snow.png", "text.png", "enemy.png"];
   let enemiesArray = [];
   let resetTime = 0;
@@ -71,9 +71,10 @@ window.onload = () => {
       this.pelletSpacing = 20;
       this.pelletVerticalNumber = 30;
       this.pelletsOnSmallLines = 4;
+      let verticalLines = 6;
+      let smallLinesNumbersBasis = Array.from(Array(verticalLines - 1), (_, number) => [[5, 10, 14, 18, 27], [3, 7, 12, 23]][number % 2]);
       let smallLinesNumbers;
       let nextSmallLineNumber;
-      let verticalLines = 6;
       let columnWidth = this.pelletSpacing * (this.pelletsOnSmallLines + 1);
       this.rectangles = [];
       this.rectanglesCleared = 0;
@@ -81,11 +82,51 @@ window.onload = () => {
       this.height = this.pelletSpacing * this.pelletVerticalNumber;
       this.width = columnWidth * (verticalLines - 1);
       this.offsetX = (world.width - this.width) / 2;
-      this.offsetY = 50;
+      this.offsetY = 25;
 
+      const candidateCantBeAdded = (candidate, index) => {
+        let left = index - 1 >= 0 && smallLinesNumbersBasis[index - 1].includes(candidate);
+        let center = smallLinesNumbersBasis[index].includes(candidate) || smallLinesNumbersBasis[index].includes(candidate - 1) || smallLinesNumbersBasis[index].includes(candidate + 1);
+        let right = index + 1 < smallLinesNumbersBasis.length && smallLinesNumbersBasis[index + 1].includes(candidate);
+        let borders = candidate - 1 === 0 || candidate + 1 === this.pelletVerticalNumber;
+        return left || center || right || borders;
+      };
+
+      const findFirstCandidate = (array) => {
+        const sortedCopy = [...array].sort((a, b) => a - b);
+        let tmpArray = [];
+        for (let index = 0; index < sortedCopy.length - 1; index++) {
+          tmpArray.push({
+            start: sortedCopy[index],
+            end: sortedCopy[index + 1],
+            distance: sortedCopy[index + 1] - sortedCopy[index],
+          })
+        }
+        let firstElement = tmpArray.sort((a, b) => b.distance - a.distance)[0];
+        return Math.floor(firstElement.start + firstElement.distance / 2);
+      };
+
+      for (let indexOfOperation = 0; indexOfOperation < level; indexOfOperation++) {
+        let currentIndex = indexOfOperation % smallLinesNumbersBasis.length;
+        let candidate = findFirstCandidate(smallLinesNumbersBasis[currentIndex]);
+        let attempts = 0;
+        let candidateOffset = 0;
+        while (candidateCantBeAdded(candidate, currentIndex)) {
+          if (attempts % 2 === 0) {
+            candidateOffset++;
+          }
+          candidate = candidate + candidateOffset * [1, -1][attempts % 2];
+          attempts++;
+        }
+        if (candidate > 0 && candidate < this.pelletVerticalNumber) {
+          smallLinesNumbersBasis[currentIndex].push(candidate);
+        }
+      }
+      
       for (let i = 0; i < verticalLines; i++) {
         this.lines.push({startX: i * columnWidth, startY: 0, endX: i * columnWidth, endY: this.height});
-        smallLinesNumbers = i % 2 === 0 ? [0, 5, 10, 14, 18, 27, this.pelletVerticalNumber] : [0, 3, 7, 12, 25, this.pelletVerticalNumber];
+        smallLinesNumbers = i !== verticalLines - 1 ? smallLinesNumbersBasis[i].concat([0, this.pelletVerticalNumber]) : [];
+        smallLinesNumbers.sort((a, b) => a - b);
         for (let j = 0; j <= this.pelletVerticalNumber; j++) {
           this.pellets.push({posX: i * columnWidth, posY: this.pelletSpacing * j});
           if (i !== verticalLines - 1 && smallLinesNumbers.includes(j)) {
@@ -103,7 +144,7 @@ window.onload = () => {
     }
 
     getBottomMiddleCoordinates() {
-      let middle = Math.floor(this.width / 8) * 4; // TODO generic variable with velocity
+      let middle = Math.floor(this.width / 8) * 4;
       return {
         x: this.offsetX + middle,
         y: this.offsetY + this.height
@@ -156,7 +197,7 @@ window.onload = () => {
           } else if (rect.isACorner) {
             this.cornerCleared++;
             if (this.cornerCleared === 4) {
-              eatEnemiesTime = 600; // about 10 seconds
+              eatEnemiesTime = 600;
             }
           }
         }
@@ -237,7 +278,7 @@ window.onload = () => {
         if (xAxisMoveisPossible && !yAxisMoveisPossible) {
           this.move(newPositionX, this.positionY);
         }
-        if (xAxisMoveisPossible && yAxisMoveisPossible) { // Intersection
+        if (xAxisMoveisPossible && yAxisMoveisPossible) {
           if (this.previousPositionX === this.positionX) {
             this.move(newPositionX, this.positionY);
           } else {
@@ -278,7 +319,7 @@ window.onload = () => {
       }
     }
 
-    update() {
+    update(milliseconds) {
       if (freezingTime > 0) {
         freezingTime--;
       }
@@ -286,7 +327,7 @@ window.onload = () => {
         this.spriteOffsetX = 4 * this.spriteCroppedWidth;
         return;
       }
-      let step = Math.floor(new Date().getMilliseconds() / 250) % 4;
+      let step = Math.floor(milliseconds / 250) % 4;
       if (keys.ArrowLeft.pressed) {
         this.velocityX = -2;
         this.spriteOffsetY = this.spriteCroppedHeight;
@@ -320,21 +361,31 @@ window.onload = () => {
   }
 
   class Enemy extends Person {
-    constructor(cornersCoordinates, startingOffsetX, startingOffsetY, startingVelocityX, startingVelocityY, startingBehavior) {
-      super(startingBehavior === EnemyBehavior.PATROL ? cornersCoordinates.downRightX : cornersCoordinates.upLeftX + startingOffsetX, startingBehavior === EnemyBehavior.PATROL ? cornersCoordinates.downRightY : cornersCoordinates.upLeftY + startingOffsetY);
+    constructor(cornersCoordinates, startingOffsetX, startingOffsetY, startingVelocityX, startingVelocityY, isPatroler) {
+      super(isPatroler ? cornersCoordinates.downRightX : cornersCoordinates.upLeftX + startingOffsetX, isPatroler ? cornersCoordinates.downRightY : cornersCoordinates.upLeftY + startingOffsetY);
       this.cornersCoordinates = cornersCoordinates;
       this.width = 32;
       this.height = 32;
       this.velocityX = startingVelocityX;
       this.velocityY = startingVelocityY;
-      this.behavior = startingBehavior;
-      this.spriteOffsetY = startingBehavior === EnemyBehavior.PATROL ? 32 : 0;
-      this.timeUntilNextBehavior = Math.max(200, 2000 - level * 200);
+      this.repopPositionX = isPatroler ? cornersCoordinates.downRightX : cornersCoordinates.upLeftX + startingOffsetX;
+      this.repopPositionY = isPatroler ? cornersCoordinates.downRightY : cornersCoordinates.upLeftY + startingOffsetY;
+      this.isPatroler = isPatroler;
+      this.behavior = isPatroler ? EnemyBehavior.PATROL : EnemyBehavior.WALK;
+      this.spriteOffsetY = isPatroler ? 32 : 0;
+      this.timeUntilNextBehavior = Math.max(200, 4000 - level * 200);
     }
 
-    draw () {
-      let step = freezingTime > 0 ? 2 : Math.floor(new Date().getMilliseconds() / 500) % 2; // TODO use frames instead
-      canvasContext.drawImage(imageArray[3], gamePhase === GamePhases.NEXT_LEVEL ? 0 : step * 32, eatEnemiesTime > 0 ? 64 : this.spriteOffsetY, this.width, this.height, this.positionX - this.width / 2, this.positionY - this.height / 2, this.width, this.height);
+    draw (milliseconds) {
+      let step = freezingTime > 0 ? 2 : Math.floor(milliseconds / 500) % 2;
+      let offsetY = this.spriteOffsetY;
+      if (eatEnemiesTime > 0) {
+        offsetY = 64;
+        if (eatEnemiesTime < 200) {
+          offsetY = Math.floor(milliseconds / 500) % 2 === 0 ? 64 : this.spriteOffsetY;
+        }
+      }
+      canvasContext.drawImage(imageArray[3], gamePhase === GamePhases.NEXT_LEVEL ? 0 : step * 32, offsetY, this.width, this.height, this.positionX - this.width / 2, this.positionY - this.height / 2, this.width, this.height);
     }
 
     update(player) {
@@ -344,7 +395,7 @@ window.onload = () => {
       if (gamePhase === GamePhases.PLAY) {
         if (this.positionX < player.positionX + 5 && this.positionX > player.positionX - 5 && this.positionY < player.positionY + 5 && this.positionY > player.positionY - 5) {
           if (eatEnemiesTime > 0) {
-            enemiesArray.splice(enemiesArray.indexOf(this), 1);
+            this.behavior = EnemyBehavior.REPOP;
             addToScore(pointsFromEnemies, player);
             pointsFromEnemies = pointsFromEnemies * 2;
           } else {
@@ -353,13 +404,30 @@ window.onload = () => {
           }
         }
       }
-      if (this.behavior === EnemyBehavior.WALK) {
+      if (this.behavior === EnemyBehavior.REPOP) {
+        this.positionX = this.repopPositionX;
+        this.positionY = this.isPatroler ? this.repopPositionY + 20 : this.repopPositionY - 20;
+        this.velocityX = 0;
+        this.velocityY = 0;
+        if (eatEnemiesTime === 0) {
+          this.positionX = this.repopPositionX;
+          this.positionY = this.repopPositionY;
+          this.behavior = EnemyBehavior.WALK;
+          this.velocityX = 2;
+          this.velocityY = 2;
+          if (this.isPatroler) {
+            this.behavior = EnemyBehavior.PATROL;
+            this.velocityX = 0;
+            this.velocityY = -2;
+          }
+        }
+      } else if (this.behavior === EnemyBehavior.WALK) {
         if (this.positionY === this.cornersCoordinates.upLeftY) {
           this.velocityY = 2;
         } else if (this.positionY === this.cornersCoordinates.downRightY) {
           this.velocityY = -2;
         }
-        if (this.previousPositionX === this.positionX) { // TODO remake, not very clear
+        if (this.previousPositionX === this.positionX) {
           if (map.collide(this.positionX - this.velocityX, this.positionY)) {
             this.velocityX = -this.velocityX;
           }
@@ -386,6 +454,7 @@ window.onload = () => {
         this.timeUntilNextBehavior--;
         if (this.timeUntilNextBehavior === 0) {
           this.behavior = EnemyBehavior.SEEK;
+          this.timeUntilNextBehavior = 400;
         }
       } else if (this.behavior === EnemyBehavior.SEEK) {
         if (player.positionX < this.positionX) {
@@ -402,8 +471,13 @@ window.onload = () => {
         } else {
           this.velocityY = 0;
         }
+        this.timeUntilNextBehavior--;
+        if (this.timeUntilNextBehavior === 0) {
+          this.behavior = EnemyBehavior.STILL;
+          this.timeUntilNextBehavior = 200;
+        }
       }
-      super.update(); // TODO may not be necessary
+      super.update();
     }
   }
 
@@ -414,8 +488,8 @@ window.onload = () => {
       map = new Map();
       player.freezingAmmo = 3;
     }
-    enemiesArray = Array.from(Array(Math.min(level + 4, 6)), (_, number) => new Enemy(map.getCornersCoordinates(), number * map.getColumnWidth(), 2, 2, 2, EnemyBehavior.WALK));
-    enemiesArray.push(new Enemy(map.getCornersCoordinates(), 0, 0, 0, -2, EnemyBehavior.PATROL));
+    enemiesArray = Array.from(Array(Math.min(level + 4, 6)), (_, number) => new Enemy(map.getCornersCoordinates(), number * map.getColumnWidth(), 2, 2, 2, false));
+    enemiesArray.push(new Enemy(map.getCornersCoordinates(), 0, 0, 0, -2, true));
     player.positionX = map.getBottomMiddleCoordinates().x;
     player.positionY = map.getBottomMiddleCoordinates().y;
   }
@@ -428,6 +502,7 @@ window.onload = () => {
   }
 
   const animationLoop = () => {
+    milliseconds = new Date().getMilliseconds();
     requestAnimationFrame(animationLoop);
     canvasContext.clearRect(0, 0, world.width, world.height);
     if (gamePhase === GamePhases.MENU) {
@@ -440,7 +515,7 @@ window.onload = () => {
     } else if (gamePhase === GamePhases.NEXT_LEVEL) {
       map.draw();
       enemiesArray.forEach(enemy => {
-        enemy.draw();
+        enemy.draw(milliseconds);
       });
       player.draw();
       canvasContext.fillStyle = "black";
@@ -456,9 +531,9 @@ window.onload = () => {
       map.draw();
       enemiesArray.forEach(enemy => {
         enemy.update(player);
-        enemy.draw();
+        enemy.draw(milliseconds);
       });
-      player.update();
+      player.update(milliseconds);
       player.draw();
       if (eatEnemiesTime > 0) {
         eatEnemiesTime--;
@@ -481,7 +556,6 @@ window.onload = () => {
         }
       }
     }
-    frames++;
   }
 
   addEventListener('keydown', ({key}) => {
