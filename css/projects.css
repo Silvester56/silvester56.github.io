@@ -1,0 +1,17 @@
+h2 {
+    color: #ffffff;
+}
+.page-description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.project-container {
+    display: block;
+    height: 120px;
+    padding: 1rem;
+    border: 1px solid #ffffff;
+}
+.project-container:hover {
+    border: 1px solid #888888;
+}

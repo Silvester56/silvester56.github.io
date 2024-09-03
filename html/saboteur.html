@@ -1,64 +1,59 @@
 <!DOCTYPE html>
 <html dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Saboteur calculator | Silvester56</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/saboteur.css">
-    <script src="../js/common.js"></script>
-    <script type="text/javascript" src="../js/saboteur.js"></script>
-  </head>
-  <body>
-    <header>
-      <div class="header-center">
-        <h1>Silvester56</h1>
-        <nav>
-          <a href="../index.html">Home</a>
-          <a href="gridmoves.html">Grid moves</a>
-          <a href="saboteur.html">Saboteur calculator</a>
-          <a href="flexbox.html">Flexbox</a>
-          <a href="sugar.html">Sugar</a>
-          <a href="passwords.html">Passwords generator</a>
-          <a href="anagram.html">Anagram</a>
-          <a href="radima.html">Radima</a>
-        </nav>
+
+<head>
+  <meta charset="utf-8">
+  <title>Saboteur calculator | Silvester56</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/saboteur.css">
+  <script src="../js/common.js"></script>
+  <script type="text/javascript" src="../js/saboteur.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-center">
+      <h1>Silvester56</h1>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="https://github.com/Silvester56">Github</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Diggers</span>
+        <button id="dminus" type="button" onclick="remove(1)">-</button>
+        <button type="button" onclick="add(1)">+</button>
       </div>
-    </header>
-    <main>
-      <div class="page-description">
-        <p>This tool calculates all the possible cards distributions in a game of Saboteur.</p>
+    </div>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Saboteurs</span>
+        <button id="sminus" type="button" onclick="remove(2)">-</button>
+        <button type="button" onclick="add(2)">+</button>
       </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Diggers</span>
-          <button id="dminus" type="button" onclick="remove(1)">-</button>
-          <button type="button" onclick="add(1)">+</button>
-        </div>
+    </div>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Players</span>
+        <button id="pminus" type="button" onclick="remove(3)">-</button>
+        <button id="pplus" type="button" onclick="add(3)">+</button>
       </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Saboteurs</span>
-          <button id="sminus" type="button" onclick="remove(2)">-</button>
-          <button type="button" onclick="add(2)">+</button>
-        </div>
+    </div>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Actions</span>
+        <button id="start" type="button" onclick="calculate()">Calculate</button>
+        <button type="button" onclick="reset()">Reset</button>
       </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Players</span>
-          <button id="pminus" type="button" onclick="remove(3)">-</button>
-          <button id="pplus" type="button" onclick="add(3)">+</button>
-        </div>
-      </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Actions</span>
-          <button id="start" type="button" onclick="calculate()">Calculate</button>
-          <button type="button" onclick="reset()">Reset</button>
-        </div>
-      </div>
-      <div class="holder" id="cards"></div>
-      <div class="holder" id="players"></div>
-      <div id="results"></div>
-    </main>
-  </body>
+    </div>
+    <div class="holder" id="cards"></div>
+    <div class="holder" id="players"></div>
+    <div id="results"></div>
+  </main>
+</body>
+
 </html>
