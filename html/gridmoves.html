@@ -1,70 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Grid moves | Silvester56</title>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../css/gridmoves.css">
-    <script src="../js/common.js"></script>
-    <script src="../js/gridmoves.js"></script>
-  </head>
-  <body>
-    <header>
-      <div class="header-center">
-        <h1>Silvester56</h1>
-        <nav>
-          <a href="../index.html">Home</a>
-          <a href="gridmoves.html">Grid moves</a>
-          <a href="saboteur.html">Saboteur calculator</a>
-          <a href="flexbox.html">Flexbox</a>
-          <a href="sugar.html">Sugar</a>
-          <a href="passwords.html">Passwords generator</a>
-          <a href="anagram.html">Anagram</a>
-          <a href="radima.html">Radima</a>
-        </nav>
+
+<head>
+  <meta charset="utf-8">
+  <title>Grid moves | Silvester56</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/gridmoves.css">
+  <script src="../js/common.js"></script>
+  <script src="../js/gridmoves.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-center">
+      <h1>Silvester56</h1>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="https://github.com/Silvester56">Github</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Grid</span>
+        <input type="number" id="size" min="5" value="5">
       </div>
-    </header>
-    <main>
-      <div class="page-description">
-        <p>This page creates a grid. Each cell on the grid is red if it is close enough to the center, and gray otherwise.</p>
-        <p>The user can choose which distance is used : manhattan, eucledian, or minkowski.</p>
+    </div>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Square side</span>
+        <input type="number" id="square" min="1" value="40">
+        <span class="button-label">px</span>
       </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Grid</span>
-          <input type="number" id="size" min="5" value="5">
-        </div>
+    </div>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Radius</span>
+        <input type="number" id="move" min="0" value="3">
       </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Square side</span>
-          <input type="number" id="square" min="1" value="40">
-          <span class="button-label">px</span>
-        </div>
+    </div>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Type</span>
+        <select id="type">
+          <option value="manhattan">Manhattan</option>
+          <option value="eucledian">Eucledian</option>
+          <option value="minkowski">Minkowski</option>
+        </select>
       </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Radius</span>
-          <input type="number" id="move" min="0" value="3">
-        </div>
+    </div>
+    <div class="input-line">
+      <div class="input-unit">
+        <span class="button-label">Actions</span>
+        <button id="start" type="button" onclick="displayGrid()">Draw</button>
       </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Type</span>
-          <select id="type">
-            <option value="manhattan">Manhattan</option>
-            <option value="eucledian">Eucledian</option>
-            <option value="minkowski">Minkowski</option>
-          </select>
-        </div>
-      </div>
-      <div class="input-line">
-        <div class="input-unit">
-          <span class="button-label">Actions</span>
-          <button id="start" type="button" onclick="displayGrid()">Draw</button>
-        </div>
-      </div>
-      <div id="grid"></div>
-    </main>
-  </body>
+    </div>
+    <div id="grid"></div>
+  </main>
+</body>
+
 </html>

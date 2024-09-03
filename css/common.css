@@ -8,7 +8,9 @@ body {
   color: #999999;
 }
 header {
-  background-image: url('../img/header.png');
+  background-image: url('../img/header.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
   padding: 0 1rem;
 }
 .header-center {
@@ -24,11 +26,11 @@ header {
   margin: 0;
 }
 nav {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   align-items: center;
-  grid-template-columns: repeat(2, 200px);
-  grid-template-rows: repeat(4, 1fr);
+  justify-content: space-around;
 }
 main {
   padding: 1rem;
