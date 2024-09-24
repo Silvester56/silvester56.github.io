@@ -48,6 +48,39 @@ window.onload = () => {
     }
   }
 
+  class Target extends RoundObject {
+    update(missiles) {
+      super.update();
+      return missiles.some(m => this.collide(m.centerRadius, m.centerAngle))
+    }
+
+    collide(posRad, posAng) {
+      let x = posRad * Math.cos(posAng);
+      let y = posRad * Math.sin(posAng);
+      let centerX = this.centerRadius * Math.cos(this.centerAngle);
+      let centerY = this.centerRadius * Math.sin(this.centerAngle);
+
+      return x < centerX + this.size && x > centerX - this.size && y < centerY + this.size && y > centerY - this.size;
+    }
+  }
+
+  class Missile extends RoundObject {
+    constructor(r, a, s, c, v) {
+      super(r, a, s, c);
+      this.velocityAng = v;
+      this.life = 50;
+    }
+
+    update() {
+      super.update();
+      this.life--;
+      this.centerAngle = this.centerAngle + this.velocityAng;
+      return this.life === 0;
+    }
+  }
+
+  const missiles = [];
+
   class Person {
     constructor(r, a) {
       this.positionRadius = r;
@@ -65,6 +98,8 @@ window.onload = () => {
       this.spriteOffsetY = 0;
       this.spriteCroppedWidth = 27;
       this.spriteCroppedHeight = 33;
+      this.missilesLeft = 15;
+      this.missileReady = true;
     }
 
     draw() {
@@ -82,8 +117,16 @@ window.onload = () => {
       } else if (keys.ArrowRight.pressed) {
         this.spriteOffsetX = 0;
       }
+      if (keys.Space.pressed && this.missileReady && this.missilesLeft > 0) {
+        missiles.push(new Missile(this.positionRadius + this.drawHeight / 2, this.positionAngle, 4, "yellow", this.spriteOffsetX === 0 ? 0.02 : -0.02));
+        this.missileReady = false;
+        this.missilesLeft--;
+      }
+      if (!keys.Space.pressed) {
+        this.missileReady = true;
+      }
       this.positionRadius = this.positionRadius + this.velocityRadius;
-      if (this.positionRadius > polarCenterY / 1.5) { // TODO polarCenterY / 1.5 must be a variable in constructor
+      if (this.positionRadius > polarCenterY / 1.5) {
         this.velocityRadius = this.velocityRadius - 0.1;
       } else {
         this.positionRadius = polarCenterY / 1.5;
@@ -95,6 +138,7 @@ window.onload = () => {
   const planet = new RoundObject(0, 0, polarCenterY / 1.5, "grey")
   const craters = Array.from(Array(100), (_, number) => new RoundObject(polarCenterY / 1.5 - number * 5 * Math.random(), Math.random() * 2 * Math.PI, 20 * Math.random(), "black", Math.random() > 0.5));
   const stars = Array.from(Array(100), (_, number) => new RoundObject(polarCenterY / 1.5 + number * 5 * Math.random(), Math.random() * 2 * Math.PI, 1, "white"));
+  const targets = Array.from(Array(10), (_, number) => new Target(polarCenterY / 1.5 + 20 + number * 50 * Math.random(), Math.random() * 2 * Math.PI, 15, "red"));
   const player = new Player(polarCenterY / 1.5, Math.PI * 3 / 2);
 
   const animationLoop = () => {
@@ -109,6 +153,18 @@ window.onload = () => {
       s.update();
       s.draw()
     });
+    for (let i = 0; i < missiles.length; i++) {
+      missiles[i].draw();
+      if (missiles[i].update()) {
+        missiles.splice(i, 1);
+      }
+    }
+    for (let i = 0; i < targets.length; i++) {
+      targets[i].draw();
+      if (targets[i].update(missiles)) {
+        targets.splice(i, 1);
+      }
+    }
     player.update();
     player.draw();
   }
@@ -125,7 +181,7 @@ window.onload = () => {
       keys.ArrowUp.pressed = true;
       break;
       case ' ':
-      keys.Space.pressed = false; // TODO same in radima
+      keys.Space.pressed = true;
     }
   });
 
@@ -141,7 +197,7 @@ window.onload = () => {
       keys.ArrowUp.pressed = false;
       break;
       case ' ':
-      keys.Space.pressed = false; // TODO same in radima
+      keys.Space.pressed = false;
     }
   });
 
