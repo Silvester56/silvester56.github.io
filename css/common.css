@@ -93,6 +93,14 @@ code {
   background: #282828;
   color: #ebdbb2;
 }
+#game {
+  display: block;
+  width: 80%;
+  height: calc(100vh - 150px);
+  margin: 0 auto;
+  border: 1px solid white;
+  background-color: black;
+}
 
 @media (max-width: 700px) {
   .header-center {
