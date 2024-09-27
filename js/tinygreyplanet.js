@@ -7,6 +7,7 @@ window.onload = () => {
 
   const polarCenterX = world.width / 2;
   const polarCenterY = world.height * 2;
+  const planetRadius = polarCenterY / 1.5;
 
   let robotSprite = new Image();
 
@@ -92,6 +93,7 @@ window.onload = () => {
   class Player extends Person {
     constructor(r, a) {
       super(r, a);
+      this.groundRadius = r;
       this.drawWidth = 27;
       this.drawHeight = 33;
       this.spriteOffsetX = 0;
@@ -126,20 +128,20 @@ window.onload = () => {
         this.missileReady = true;
       }
       this.positionRadius = this.positionRadius + this.velocityRadius;
-      if (this.positionRadius > polarCenterY / 1.5) {
+      if (this.positionRadius > this.groundRadius) {
         this.velocityRadius = this.velocityRadius - 0.1;
       } else {
-        this.positionRadius = polarCenterY / 1.5;
+        this.positionRadius = this.groundRadius;
         this.velocityRadius = 0;
       }
     }
   }
   
-  const planet = new RoundObject(0, 0, polarCenterY / 1.5, "grey")
-  const craters = Array.from(Array(100), (_, number) => new RoundObject(polarCenterY / 1.5 - number * 5 * Math.random(), Math.random() * 2 * Math.PI, 20 * Math.random(), "black", Math.random() > 0.5));
-  const stars = Array.from(Array(100), (_, number) => new RoundObject(polarCenterY / 1.5 + number * 5 * Math.random(), Math.random() * 2 * Math.PI, 1, "white"));
-  const targets = Array.from(Array(10), (_, number) => new Target(polarCenterY / 1.5 + 20 + number * 50 * Math.random(), Math.random() * 2 * Math.PI, 15, "red"));
-  const player = new Player(polarCenterY / 1.5, Math.PI * 3 / 2);
+  const planet = new RoundObject(0, 0, planetRadius, "grey")
+  const craters = Array.from(Array(100), (_, number) => new RoundObject(planetRadius - number * 5 * Math.random(), Math.random() * 2 * Math.PI, 20 * Math.random(), "black", Math.random() > 0.5));
+  const stars = Array.from(Array(100), (_, number) => new RoundObject(planetRadius + number * 5 * Math.random(), Math.random() * 2 * Math.PI, 1, "white"));
+  const targets = Array.from(Array(10), (_, number) => new Target(planetRadius + 20 + number * 50 * Math.random(), Math.random() * 2 * Math.PI, 15, "red"));
+  const player = new Player(planetRadius, Math.PI * 3 / 2);
 
   const animationLoop = () => {
     requestAnimationFrame(animationLoop);
