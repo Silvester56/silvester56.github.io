@@ -9,7 +9,10 @@ window.onload = () => {
   const polarCenterY = world.height * 2;
   const planetRadius = polarCenterY / 1.5;
 
-  let robotSprite = new Image();
+  let imageNameArray = ["robot.png", "text.png"];
+  let imagesLoaded = 0;
+  let startTime;
+  let elapsedTime;
 
   const keys = {
     ArrowLeft: { pressed: false },
@@ -17,6 +20,17 @@ window.onload = () => {
     ArrowUp: { pressed: false },
     ArrowDown: { pressed: false },
     Space: { pressed: false }
+  }
+
+  const drawTextFromSprite = (colorNumber, text, x, y, size) => {
+    text.split("").forEach((character, i) => {
+      let offsetX = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(character.toUpperCase()) * 8;
+      let offsetY = colorNumber * 24;
+      if (offsetX >= 0) {
+        canvasContext.imageSmoothingEnabled = false;
+        canvasContext.drawImage(imageArray[1], offsetX, offsetY, 8, 8, x + i * size, y, size, size);
+      }
+    });
   }
 
   class RoundObject {
@@ -30,15 +44,15 @@ window.onload = () => {
 
     update() {
       if (keys.ArrowLeft.pressed) {
-        this.centerAngle = this.centerAngle + 0.01;
-      } else if (keys.ArrowRight.pressed) {
         this.centerAngle = this.centerAngle - 0.01;
+      } else if (keys.ArrowRight.pressed) {
+        this.centerAngle = this.centerAngle + 0.01;
       }
     }
 
     draw() {
       canvasContext.beginPath();
-      canvasContext.arc(polarCenterX + this.centerRadius * Math.cos(this.centerAngle), polarCenterY + this.centerRadius * Math.sin(this.centerAngle), this.size, 0, 2 * Math.PI, false);
+      canvasContext.arc(polarCenterX + this.centerRadius * Math.cos(this.centerAngle), polarCenterY - this.centerRadius * Math.sin(this.centerAngle), this.size, 0, 2 * Math.PI, false);
       if (this.fill) {
         canvasContext.fillStyle = this.color;
         canvasContext.fill();
@@ -105,9 +119,8 @@ window.onload = () => {
     }
 
     draw() {
-      if (robotSprite) {
-        canvasContext.drawImage(robotSprite, this.spriteOffsetX, this.spriteOffsetY, this.spriteCroppedWidth, this.spriteCroppedHeight, polarCenterX + this.positionRadius * Math.cos(this.positionAngle) - this.drawWidth / 2, polarCenterY + this.positionRadius * Math.sin(this.positionAngle) - this.drawHeight, this.drawWidth, this.drawHeight);
-      }
+      canvasContext.drawImage(imageArray[0], this.spriteOffsetX, this.spriteOffsetY, this.spriteCroppedWidth, this.spriteCroppedHeight, polarCenterX + this.positionRadius * Math.cos(this.positionAngle) - this.drawWidth / 2, polarCenterY - this.positionRadius * Math.sin(this.positionAngle) - this.drawHeight, this.drawWidth, this.drawHeight);
+      drawTextFromSprite(2, `${this.missilesLeft}`, world.width / 2 - 100, world.height - 16, 16);
     }
 
     update() {
@@ -120,7 +133,7 @@ window.onload = () => {
         this.spriteOffsetX = 0;
       }
       if (keys.Space.pressed && this.missileReady && this.missilesLeft > 0) {
-        missiles.push(new Missile(this.positionRadius + this.drawHeight / 2, this.positionAngle, 4, "yellow", this.spriteOffsetX === 0 ? 0.02 : -0.02));
+        missiles.push(new Missile(this.positionRadius + this.drawHeight / 2, this.positionAngle, 4, "yellow", this.spriteOffsetX === 0 ? -0.02 : 0.02));
         this.missileReady = false;
         this.missilesLeft--;
       }
@@ -141,7 +154,13 @@ window.onload = () => {
   const craters = Array.from(Array(100), (_, number) => new RoundObject(planetRadius - number * 5 * Math.random(), Math.random() * 2 * Math.PI, 20 * Math.random(), "black", Math.random() > 0.5));
   const stars = Array.from(Array(100), (_, number) => new RoundObject(planetRadius + number * 5 * Math.random(), Math.random() * 2 * Math.PI, 1, "white"));
   const targets = Array.from(Array(10), (_, number) => new Target(planetRadius + 20 + number * 50 * Math.random(), Math.random() * 2 * Math.PI, 15, "red"));
-  const player = new Player(planetRadius, Math.PI * 3 / 2);
+  const player = new Player(planetRadius, Math.PI / 2);
+
+  const formatTime = (time) => {
+    let minutes = time.getMinutes() < 10 ? `0${time.getMinutes()}` : time.getMinutes();
+    let seconds = time.getSeconds() < 10 ? `0${time.getSeconds()}` : time.getSeconds();
+    return `${minutes} ${seconds} ${time.getMilliseconds()}`;
+  }
 
   const animationLoop = () => {
     requestAnimationFrame(animationLoop);
@@ -169,6 +188,9 @@ window.onload = () => {
     }
     player.update();
     player.draw();
+    elapsedTime = new Date(new Date() - startTime);
+    drawTextFromSprite(7, formatTime(elapsedTime), world.width / 2, world.height - 16, 16);
+    drawTextFromSprite(0, `${targets.length}`, world.width / 2 - 200, world.height - 16, 16);
   }
 
   addEventListener('keydown', ({key}) => {
@@ -203,8 +225,16 @@ window.onload = () => {
     }
   });
 
-  robotSprite.src = "../img/robot.png";
-  robotSprite.onload = () => {
-    animationLoop();
-  }
+  let imageArray = imageNameArray.map(name => {
+    let img = new Image();
+    img.src = "../img/" + name;
+    img.onload = () => {
+      imagesLoaded++;
+      if(imagesLoaded === imageNameArray.length) {
+        startTime = new Date();
+        animationLoop();
+      }
+    }
+    return img;
+  });
 }
