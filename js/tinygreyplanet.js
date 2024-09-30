@@ -24,13 +24,17 @@ window.onload = () => {
 
   const drawTextFromSprite = (colorNumber, text, x, y, size) => {
     text.split("").forEach((character, i) => {
-      let offsetX = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(character.toUpperCase()) * 8;
+      let offsetX = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!".indexOf(character.toUpperCase()) * 8;
       let offsetY = colorNumber * 24;
       if (offsetX >= 0) {
         canvasContext.imageSmoothingEnabled = false;
         canvasContext.drawImage(imageArray[1], offsetX, offsetY, 8, 8, x + i * size, y, size, size);
       }
     });
+  }
+
+  const drawTextCenter = (colorNumber, text, offsetY, size) => {
+    drawTextFromSprite(colorNumber, text, (world.width - text.length * size) / 2, (world.height - size) / 2 + offsetY, size)
   }
 
   class RoundObject {
@@ -163,8 +167,12 @@ window.onload = () => {
   }
 
   const animationLoop = () => {
-    requestAnimationFrame(animationLoop);
     canvasContext.clearRect(0, 0, world.width, world.height);
+    if (targets.length === 0) {
+      drawTextCenter(0, "COMPLETE!", 0, 40);
+    } else {
+      requestAnimationFrame(animationLoop);
+    }
     planet.draw();
     craters.forEach(c => {
       c.update();
