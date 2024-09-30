@@ -50,9 +50,9 @@ window.onload = () => {
   }
 
   class Target extends RoundObject {
-    update(missiles) {
+    update(missiles, player) {
       super.update();
-      return missiles.some(m => this.collide(m.centerRadius, m.centerAngle))
+      return missiles.some(m => this.collide(m.centerRadius, m.centerAngle)) || this.collide(player.positionRadius + player.drawHeight / 2, player.positionAngle);
     }
 
     collide(posRad, posAng) {
@@ -163,7 +163,7 @@ window.onload = () => {
     }
     for (let i = 0; i < targets.length; i++) {
       targets[i].draw();
-      if (targets[i].update(missiles)) {
+      if (targets[i].update(missiles, player)) {
         targets.splice(i, 1);
       }
     }
