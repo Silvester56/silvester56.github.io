@@ -11,6 +11,7 @@ const randomElement = (characterArray, allowed) => {
 };
 
 const generatePassword = () => {
+  let assembleOrder = [lowercaseletters, uppercaseLetters, digits, specials].sort(() => 0.5 - Math.random());
   let passwordLength = new domNode("#length").val();
   let lowercaselettersAllowed = new domNode("#lowercaseletters").prop("checked");
   let uppercaseLettersAllowed = new domNode("#uppercaseLetters").prop("checked");
@@ -25,7 +26,7 @@ const generatePassword = () => {
     result = result.concat(randomElement(specials.split("").filter(c => !exclude.includes(c)), specialsAllowed));
   }
   if (new domNode("#assemble").prop("checked")) {
-    result = result.sort((a, b) => (lowercaseletters + uppercaseLetters + digits + specials).split("").indexOf(a) - (lowercaseletters + uppercaseLetters + digits + specials).split("").indexOf(b));
+    result = result.sort((a, b) => assembleOrder.findIndex(t => t.includes(a)) - assembleOrder.findIndex(t => t.includes(b)));
   } else {
     result = result.sort(() => 0.5 - Math.random());
   }
