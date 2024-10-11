@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Radio Carlito | Silvester56</title>
+  <link rel="stylesheet" href="../css/common.css">
+  <link rel="stylesheet" href="../css/radio.css">
+  <script src="../js/common.js"></script>
+  <script src="../js/radio.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-center">
+      <h1>Silvester56</h1>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="https://github.com/Silvester56">Github</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <audio id="mix" src="../audio/mix.mp3" loop></audio>
+    <div class="input-line">
+      <div class="input-unit">
+        <button onclick="playOrStopRadio()" id="control">Play</button>
+        <input onchange="changeVolume()" type="range" min="1" max="100" value="20" class="slider" id="volume">
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
