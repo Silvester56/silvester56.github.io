@@ -10,6 +10,7 @@
   width: 2rem;
   height: 2rem;
   border: 2px solid #ffffff;
+  cursor: pointer;
 }
 #container .letter.locked {
   border: 2px solid #cc2222;
