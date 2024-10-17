@@ -22,11 +22,10 @@
     </div>
   </header>
   <main>
-    <audio id="mix" src="../audio/mix.mp3" loop></audio>
     <div class="input-line">
       <div class="input-unit">
-        <button onclick="playOrStopRadio()" id="control">Play</button>
-        <input onchange="changeVolume()" type="range" min="1" max="100" value="20" class="slider" id="volume">
+        <button id="control">Play</button>
+        <input type="range" min="0" max="100" value="20" class="slider" id="volume">
       </div>
     </div>
   </main>
