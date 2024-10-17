@@ -2,32 +2,37 @@ let letterTab;
 let container;
 let input;
 
-window.onload = () => {
-  container = new domNode("#container");
-  input = new domNode("#word");
-}
+const elementFromLetter = (letterObject, index) => {
+  let result = document.createElement("div");
+  result.setAttribute("class", letterObject.locked ? "letter locked" : "letter");
+  result.innerHTML = letterObject.letter;
+  result.onclick = (e) => {
+    letterTab[index].locked = !letterTab[index].locked;
+    e.target.classList.toggle("locked");
+  };
 
-const reset = () => {
-  letterTab = input.val().toLowerCase().split('').map(x => {
-    return {letter: x, locked: false};
-  });
-  draw();
-};
-
-const shuffle = () => {
-  let toMove = letterTab.filter(el => !el.locked).sort(el => 0.5 - Math.random());
-  letterTab = letterTab.map(el => el.locked ? el : toMove.shift());
-  draw();
+  return result;
 };
 
 const draw = () => {
-  container.html('');
-  let str = letterTab.reduce((acc, cur, index) => {
-    return `${acc}<div class="letter ${cur.locked ? "locked" : ""}" data-index="${index}">${cur.letter}</div>`;
-  }, "");
-  container.html(str);
-  new domNode('.letter').on('click', (e) => {
-    letterTab[e.target.dataset.index].locked = !letterTab[e.target.dataset.index].locked;
-    e.target.classList.toggle("locked");
-  });
+  container.innerHTML = "";
+  letterTab.map(elementFromLetter).forEach(el => container.append(el));
 };
+
+window.onload = () => {
+  container = document.querySelector("#container");
+  input = document.querySelector("#word");
+
+  document.querySelector("#reset").onclick = () => {
+    letterTab = input.value.toLowerCase().split('').map(x => {
+      return {letter: x, locked: false};
+    });
+    draw();
+  };
+
+  document.querySelector("#shuffle").onclick = () => {
+    let toMove = letterTab.filter(el => !el.locked).sort(() => 0.5 - Math.random());
+    letterTab = letterTab.map(el => el.locked ? el : toMove.shift());
+    draw();
+  };
+}
