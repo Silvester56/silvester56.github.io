@@ -85,7 +85,7 @@ select {
   width: 120px;
   padding-left: 0.5rem;
 }
-code {
+code, pre {
   font-family: monospace;
   display: block;
   overflow-x: auto;

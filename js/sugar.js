@@ -12,35 +12,37 @@ alias egrep='egrep --color=auto'
 alias install='sudo apt-get install'
 alias update='sudo apt-get update'
 alias upgrade='sudo apt-get upgrade'
+alias remove='sudo apt-get remove'
 alias org='mv */* . && find . -empty -type d -delete'
 alias crawl='wget -m -p -E -k'
 alias gits='git branch; git status -s'
 alias gitcom='git commit -m'
 
+findinfolder () {
+  find . -exec grep -Hn --color=auto -i $1 {} \;
+}
+
 gitall() {
- git add --all
- git commit -m "$1"
- git push
+  git add --all
+  git commit -m "$1"
+  git push
 }
 
 gitlog() {
- git log -n $1
+  git log -n $1
 }
 
 mmv() {
- mkdir $2 && mv $1 $2
+  mkdir $2 && mv $1 $2
 }
 
 mcd() {
- mkdir "$1" &&
- cd "$1"
+  mkdir $1 && cd $1
 }`;
 
 window.onload = () => {
-  container = new domNode("#container");
-  container.html("<code>" + sugar.replaceAll("\n", "<br>") + "</code>");
+  document.querySelector('#container').innerHTML = `<pre>${sugar}</pre>`;
+  document.querySelector('#copy').onclick = () => {
+    navigator.clipboard.writeText(sugar).then(() => document.querySelector('#copy').innerHTML = "Copied!");
+  };
 }
-
-const copyAll = () => {
-  navigator.clipboard.writeText(sugar).then(() => new domNode("#copy").html("Copied!"));
-};
