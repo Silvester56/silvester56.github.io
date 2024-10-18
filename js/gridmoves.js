@@ -1,33 +1,35 @@
-let manhattan = (x, y) => {
-  return Math.abs(x) + Math.abs(y);
-};
+window.onload = () => {
+  const world = document.querySelector('#grid');
+  const canvasContext = world.getContext('2d');
 
-let eucledian = (x, y) => {
-  return Math.sqrt(x * x + y * y);
-};
+  const manhattan = (x0, y0, x1, y1) => {
+    return Math.abs(x0 - x1) + Math.abs(y0 - y1);
+  };
 
-let minkowski = (x, y) => {
-  return Math.cbrt(Math.abs(x * x * x) + Math.abs(y * y * y));
-};
+  const eucledian = (x0, y0, x1, y1) => {
+    return Math.sqrt((x0 - x1) * (x0 - x1) + (y0 - y1) * (y0 - y1));
+  };
 
-let displayGrid = () => {
-  let html = new domNode("html");
-  let grid = new domNode("#grid");
-  let edge = new domNode("#size").val();
-  let square = new domNode("#square").val();
-  let move = new domNode("#move").val();
-  let type = new domNode("#type").val();
-  let domString = "";
-  html.attr("style", `--rows: ${edge * 2 + 1}; --square: ${square}px`);
-  for (var i = edge; i >= -edge; i--) {
-    for (var j = -edge; j <= edge; j++) {
-      let distance = eval(`${type}(j, i)`);
-      if (distance <= move) {
-        domString = `${domString}<div class="square active"></div>`;
-      } else {
-        domString = `${domString}<div class="square"></div>`;
+  const chebyshev = (x0, y0, x1, y1) => {
+    return Math.max(Math.abs(x0 - x1), Math.abs(y0 - y1));
+  };
+
+  const draw = () => {
+    let numberOfSquares = new domNode("#number").val() * 2 + 1;
+    let sizeOfSquare = new domNode("#size").val();
+    let radius = new domNode("#radius").val();
+    let type = new domNode("#type").val();
+    world.width = numberOfSquares * sizeOfSquare;
+    world.height = numberOfSquares * sizeOfSquare;
+    for (let i = 0; i < numberOfSquares; i++) {
+      for (let j = 0; j < numberOfSquares; j++) {
+        if (eval(`${type}(Math.floor(numberOfSquares / 2), Math.floor(numberOfSquares / 2), i, j)`) <= radius) {
+          canvasContext.fillStyle = "red";
+          canvasContext.fillRect(i * sizeOfSquare, j * sizeOfSquare, sizeOfSquare, sizeOfSquare);
+        }
       }
     }
-  }
-  grid.html(domString);
-};
+  };
+
+  document.querySelector('#draw').onclick = draw;
+}
