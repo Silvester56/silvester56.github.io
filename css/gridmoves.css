@@ -1,13 +1,6 @@
 #grid {
-  display: flex;
-  flex-wrap: wrap;
-  width: calc(var(--rows) * var(--square));
-}
-.square {
-  background-color: #777;
-  width: var(--square);
-  height: var(--square);
-}
-.square.active {
-  background-color: red;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid white;
+  background-color: black;
 }

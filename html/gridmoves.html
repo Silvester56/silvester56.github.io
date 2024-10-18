@@ -24,21 +24,21 @@
   <main>
     <div class="input-line">
       <div class="input-unit">
-        <span class="button-label">Grid</span>
-        <input type="number" id="size" min="5" value="5">
+        <span class="button-label">Squares</span>
+        <input type="number" id="number" min="5" value="5">
       </div>
     </div>
     <div class="input-line">
       <div class="input-unit">
-        <span class="button-label">Square side</span>
-        <input type="number" id="square" min="1" value="40">
+        <span class="button-label">Square size</span>
+        <input type="number" id="size" min="1" value="40">
         <span class="button-label">px</span>
       </div>
     </div>
     <div class="input-line">
       <div class="input-unit">
         <span class="button-label">Radius</span>
-        <input type="number" id="move" min="0" value="3">
+        <input type="number" id="radius" min="0" value="3">
       </div>
     </div>
     <div class="input-line">
@@ -47,17 +47,17 @@
         <select id="type">
           <option value="manhattan">Manhattan</option>
           <option value="eucledian">Eucledian</option>
-          <option value="minkowski">Minkowski</option>
+          <option value="chebyshev">Chebyshev</option>
         </select>
       </div>
     </div>
     <div class="input-line">
       <div class="input-unit">
         <span class="button-label">Actions</span>
-        <button id="start" type="button" onclick="displayGrid()">Draw</button>
+        <button id="draw" type="button">Draw</button>
       </div>
     </div>
-    <div id="grid"></div>
+    <canvas id="grid"></canvas>
   </main>
 </body>
 
