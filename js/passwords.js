@@ -37,3 +37,8 @@ const generatePassword = () => {
 const copyPassword = () => {
   navigator.clipboard.writeText(document.querySelector("#password").value).then(() => document.querySelector("#copy").innerHTML = "Copied!");
 };
+
+window.onload = () => {
+  document.querySelector("#generate").onclick = generatePassword;
+  document.querySelector("#copy").onclick = copyPassword;
+}
