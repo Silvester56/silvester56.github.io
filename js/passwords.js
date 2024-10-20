@@ -12,12 +12,12 @@ const randomElement = (characterArray, allowed) => {
 
 const generatePassword = () => {
   let assembleOrder = [lowercaseletters, uppercaseLetters, digits, specials].sort(() => 0.5 - Math.random());
-  let passwordLength = new domNode("#length").val();
-  let lowercaselettersAllowed = new domNode("#lowercaseletters").prop("checked");
-  let uppercaseLettersAllowed = new domNode("#uppercaseLetters").prop("checked");
-  let digitsAllowed = new domNode("#digits").prop("checked");
-  let specialsAllowed = new domNode("#specials").prop("checked");
-  let exclude = new domNode("#exclude").val().split("");
+  let passwordLength = document.querySelector("#length").value;
+  let lowercaselettersAllowed = document.querySelector("#lowercaseletters").checked;
+  let uppercaseLettersAllowed = document.querySelector("#uppercaseLetters").checked;
+  let digitsAllowed = document.querySelector("#digits").checked;
+  let specialsAllowed = document.querySelector("#specials").checked;
+  let exclude = document.querySelector("#exclude").value.split("");
   let result = [];
   while (result.length < passwordLength && (lowercaselettersAllowed || uppercaseLettersAllowed || digitsAllowed || specialsAllowed))  {
     result = result.concat(randomElement(lowercaseletters.split("").filter(c => !exclude.includes(c)), lowercaselettersAllowed));
@@ -25,15 +25,15 @@ const generatePassword = () => {
     result = result.concat(randomElement(digits.split("").filter(c => !exclude.includes(c)), digitsAllowed));
     result = result.concat(randomElement(specials.split("").filter(c => !exclude.includes(c)), specialsAllowed));
   }
-  if (new domNode("#assemble").prop("checked")) {
+  if (document.querySelector("#assemble").checked) {
     result = result.sort((a, b) => assembleOrder.findIndex(t => t.includes(a)) - assembleOrder.findIndex(t => t.includes(b)));
   } else {
     result = result.sort(() => 0.5 - Math.random());
   }
-  new domNode("#password").val(result.slice(0, passwordLength).join(""));
-  new domNode("#copy").html("Copy");
+  document.querySelector("#password").value = result.slice(0, passwordLength).join("");
+  document.querySelector("#copy").innerHTML = "Copy";
 };
 
 const copyPassword = () => {
-  navigator.clipboard.writeText(new domNode("#password").val()).then(() => new domNode("#copy").html("Copied!"));
+  navigator.clipboard.writeText(document.querySelector("#password").value).then(() => document.querySelector("#copy").innerHTML = "Copied!");
 };
