@@ -25,7 +25,7 @@ const remove = (array) => {
 };
 
 const add = (array, letter) => {
-  array.push(`${letter}${diggersArray.length + 1}`);
+  array.push(`${letter}${array.length + 1}`);
   draw();
   checkDisabled();
 };
@@ -56,6 +56,7 @@ const calculate = () => {
   possibleGames = [];
   cArray = diggersArray.concat(saboteursArray);
   pArray = playersArray.map(x => x);
+  console.log(game("", cArray, pArray));
   for (var i = 0; i < possibleGames.length; i++) {
     let nb = possibleGames[i].split("S").length - 1;
     sNumbers[nb]++;
