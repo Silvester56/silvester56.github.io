@@ -8,9 +8,11 @@ body {
   color: #999999;
 }
 header {
-  background-image: url('../img/header.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-color: #1E1E1E;
+  opacity: 0.8;
+  background-image:  repeating-linear-gradient(45deg, #666666 25%, transparent 25%, transparent 75%, #666666 75%, #666666), repeating-linear-gradient(45deg, #666666 25%, #1E1E1E 25%, #1E1E1E 75%, #666666 75%, #666666);
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
   padding: 0 1rem;
 }
 .header-center {
@@ -34,10 +36,6 @@ nav {
 }
 main {
   padding: 1rem;
-}
-.page-description {
-  width: 70%;
-  margin: 0 auto;
 }
 a, a:visited {
   text-decoration: none;
@@ -103,10 +101,22 @@ code, pre {
 }
 
 @media (max-width: 700px) {
-  .header-center {
-    width: 90%;
+  html {
+    font-size: 32px;
   }
-  .page-description {
-   width: 90%;
+  body {
+    font-size: 0.75rem;
+  }
+  .header-center {
+    width: auto;
+    margin: 0;
+  }
+  .header-center h1 {
+    display: none;
+  }
+  nav {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
   }
 }
