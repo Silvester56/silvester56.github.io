@@ -8,11 +8,7 @@ body {
   color: #999999;
 }
 header {
-  background-color: #1E1E1E;
-  opacity: 0.8;
-  background-image:  repeating-linear-gradient(45deg, #666666 25%, transparent 25%, transparent 75%, #666666 75%, #666666), repeating-linear-gradient(45deg, #666666 25%, #1E1E1E 25%, #1E1E1E 75%, #666666 75%, #666666);
-  background-position: 0 0, 10px 10px;
-  background-size: 20px 20px;
+  background-color: #999999;
   padding: 0 1rem;
 }
 .header-center {
@@ -22,7 +18,7 @@ header {
   width: 70%;
   height: 100px;
   margin: 0 auto;
-  color: #fff;
+  color: #ffffff;
 }
 .header-center h1 {
   margin: 0;
