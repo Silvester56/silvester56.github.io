@@ -1,6 +1,6 @@
 #grid {
   display: block;
   margin: 0 auto;
-  border: 1px solid white;
-  background-color: black;
+  border: 2px solid var(--grey);
+  border-radius: 4px;
 }

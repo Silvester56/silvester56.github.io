@@ -5,13 +5,17 @@
 .holder div {
   margin: 0 1rem;
   width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.digger {
-  border: 1px solid blue;
+.holder div.digger {
+  border: 2px solid var(--blue);
 }
-.saboteur {
-  border: 1px solid red;
+.holder div.saboteur {
+  border: 2px solid var(--red);
 }
-.player {
-  border: 1px solid white;
+.holder div.player {
+  border: 2px solid var(--white);
 }

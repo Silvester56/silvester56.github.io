@@ -1,15 +1,16 @@
 h2 {
-  color: #ffffff;
+  color: var(--white);
 }
 .project-container {
   display: block;
   height: 120px;
   margin-top: 1rem;
   padding: 0.5rem;
-  border: 1px solid #ffffff;
+  border: 2px solid var(--grey);
+  border-radius: 4px;
 }
 .project-container:hover {
-  border: 1px solid #888888;
+  background-color: var(--grey);
 }
 
 @media (max-width: 800px) {
