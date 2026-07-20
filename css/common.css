@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 html {
   font-size: 16px;
   font-family: sans-serif;
@@ -53,11 +56,11 @@ div.input-line {
 }
 div.input-unit {
   display: flex;
+  height: 40px;
   flex: 1;
   gap: 0.5rem;
 }
 span.button-label {
-  height: 40px;
   width: 6rem;
   display: inline-flex;
   align-items: center;
@@ -68,8 +71,8 @@ button {
   background-color: var(--black);
   border: 2px solid var(--grey);
   border-radius: 4px;
-  height: 40px;
   width: 120px;
+  padding: 0;
 }
 button:disabled {
   opacity: 0.5;
@@ -83,7 +86,6 @@ select, input {
   background-color: var(--black);
   border: 2px solid var(--grey);
   border-radius: 4px;
-  height: 40px;
   width: 120px;
   padding-left: 0.5rem;
 }
@@ -93,8 +95,7 @@ select, input {
   border: 2px solid var(--grey);
 }
 .custom-number-input-button button {
-  height: 36px;
-  width: 40px;
+  width: 38px;
   border: none;
   border-radius: 0;
 }
