@@ -87,6 +87,25 @@ select, input {
   width: 120px;
   padding-left: 0.5rem;
 }
+.custom-number-input-button {
+  display: flex;
+  border-radius: 4px;
+  border: 2px solid var(--grey);
+}
+.custom-number-input-button button {
+  height: 36px;
+  width: 40px;
+  border: none;
+  border-radius: 0;
+}
+.custom-number-input-button span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 2px solid var(--grey);
+  border-right: 2px solid var(--grey);
+  width: 80px;
+}
 code, pre {
   font-family: monospace;
   display: block;
